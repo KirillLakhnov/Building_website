@@ -38,8 +38,7 @@
                 </ul>
             </nav>
         </header> -->
-
-        <section class="catalog">
+        <div class="container">
             <script type="module">
                 import {html, Component, render, useState, useEffect} from "../../js/js_libs/htm-preact.min.js";
 
@@ -53,7 +52,8 @@
                     let row_num;
                     let col_num;
                     const range = XLSX.utils.decode_range(sheet['!ref']);
-                    for(row_num = range.s.r; row_num <= range.e.r; row_num++) 
+
+                    for(row_num = range.s.r + 1; row_num <= range.e.r; row_num++) 
                     {
                         row = [];
                         for(col_num = range.s.c; col_num <= range.e.c; col_num++)
@@ -82,7 +82,7 @@
                     const [currentSheet, setCurrentSheet] = useState(null);
 
                     useEffect(() => {
-                        loadFile();
+                        load_file();
                     }, []);
 
                     function isNumber(n)
@@ -90,7 +90,7 @@
                         return !isNaN(parseFloat(n)) && isFinite(n);
                     }
 
-                    function loadFile() 
+                    function load_file() 
                     {
                         const req = new XMLHttpRequest();
                         req.open('GET', '../../catalog.xlsx', true);
@@ -103,11 +103,6 @@
                                 return {
                                     sheet: sheet,
                                     rows: sheet2arr(workBook.Sheets[sheet])
-                                        .filter(row => row[4] && isNumber(row[4]))
-                                        .map(row => {
-                                            row[4] = +row[4];
-                                            return row;
-                                        }),
                                 };
                             });
                             setSheets(allSheets);
@@ -126,49 +121,35 @@
                     } else 
                     {
                         return html`
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="product">
-                                            <div class="image">
-                                                <img src="${currentSheet.rows.map(row => html` 
-                                                    ${row[4]}`)}" alt="">
-                                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="product">
+                                        <div class="image">
+                                            <img src="../../${currentSheet.rows[0][5]}" alt="">
+                                        </div>
 
-                                            <div class="info">
-                                                <h3>${currentSheet.rows.map(row => html`
-                                                    ${row[2]}`)}</h3>
+                                        <div class="info">
+                                            <h3>${currentSheet.rows[0][2]}</h3>
 
-                                                <div>
-                                                    <span class="price">
-                                                        ${currentSheet.rows.map(row => html` 
-                                                        ${row[3]}`)}<small>₽</small>/шт
-                                                    </span>
+                                            <div>
+                                                <span class="price">
+                                                    ${currentSheet.rows[0][3]}<small>₽</small>/шт
+                                                </span>
 
-                                                    <button class="add-to-card">
-                                                        <i class="fa-solid fa-cart-shopping">
-                                                    </button>
-                                                </div>
+                                                <button class="add-to-card">
+                                                    <i class="fa-solid fa-cart-shopping">
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         `;
-                        /*return html`
-                            <div>
-                                <ul>
-                                    ${currentSheet.rows.map(row => html`<li>
-                                        ${row[1]} -	${row[2]} - ${row[3]} руб/шт
-                                    </li>`)}
-                                </ul>
-                            </div>
-                        `;*/
                     }
                 }
 
                 render(html`<${app}/>`, document.body);
             </script>
-        </section>
+        </div>
     </body>
 </html>
