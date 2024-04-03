@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: sans-serif;
+
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    background: #70a495;
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+
+    font-weight: 550;
+
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8%;
+
+    box-shadow: 0 5px 10px #000;
+}
+header .logo {
+    font-size: 20px;
+    font-weight: 900;
+    color: #000;
+    transition: .5s;
+}
+header .logo:hover {
+    transform: scale(1.2);
+}
+header nav ul li {
+    position: relative;
+    float: left;
+}
+header nav ul li a {
+    padding: 15px;
+    color: #000;
+    font-size: 16px;
+    display: block;
+}
+header nav ul li a:hover {
+    background: #000;
+    color: #fff;
+}
+nav ul li ul {
+    position: absolute;
+    left: 0;
+    width: 180px;
+    background: #fff;
+
+    display: none;
+}
+nav ul li ul li{
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.1);
+}    
+nav ul li:hover > ul {
+    display: initial;
+}
+
+
+.about-company {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 6rem 2rem;
+}
+.about-company .content {
+    flex: 1 1 40rem;
+    padding: 0rem 5%;
+}
+.about-company .content h2 {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+}
+.about-company .content p {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    text-align: justify;
+}
+
+.about-company .testimonial-container {
+    flex: 1 1 40rem;
+    padding: 0rem 5%;
+}
+.about-company .testimonial-container .box {
+    background: #517d71;
+
+    margin: 1.2rem 0rem;
+    padding: 1rem 2rem;
+    border-radius: 1.5rem;
+    transition: 0.5s;
+}
+.about-company .testimonial-container  .box:hover {
+    transform: translateY(-.8rem);
+}
+.about-company .testimonial-container  .box .fa-solid {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+.about-company .testimonial-container .box p {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+.about-company .testimonial-container .box .person {
+    display: flex;
+    align-items: center; 
+}
+.about-company .testimonial-container .box .img {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+}
+.about-company .testimonial-container .box .img img{
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+    border-radius: 20%;
+}
+.about-company .testimonial-container .box .author {
+    font-size: 2.5rem;
+}

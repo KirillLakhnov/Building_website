@@ -1,0 +1,103 @@
+.contacts {
+    width: 100%;
+    
+    display: flex;
+
+    align-items: center;
+    flex-wrap: center;
+    justify-content: center;
+
+    padding: 6rem 2rem;
+}
+.contacts .content {
+    flex: 1 1 10rem;
+    padding: 2rem 10%;
+}
+.contacts .content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.contacts .content p {
+    font-size: 1rem;
+}
+
+
+.feedback_container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.feedback_container .feedback_form {
+    width: 768px;
+    padding: 6rem 3rem;
+    background: #628c7f;
+    border-radius: 1.5rem;
+}
+.feedback_container .feedback_form h1 {
+    text-align: center;
+}
+.feedback_container .feedback_form .data_block {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 35px;
+    margin-top: 35px;
+}
+.feedback_container .feedback_form input {
+    background: transparent;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #585e5b;
+    padding-left: 24px;
+    color: #fff;
+    font-size: 26px;
+}
+.feedback_container .feedback_form input::placeholder {
+    font-size: 20px;
+    color: #3a564f;
+}
+.feedback_container .feedback_form .data_block .name {
+    width: 100%;
+}
+.feedback_container .feedback_form .text_area {
+    margin-top: 65px;
+    border: 2px solid #585e5b;
+    border-radius: 8px;
+    padding: 20px 25px;
+    display: flex;
+    flex-direction: column;
+}
+.feedback_container .feedback_form .text_area textarea {
+    margin-top: 20px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #000000
+}
+.feedback_container .feedback_form .text_area textarea::placeholder {
+    font-size: 20px;
+    color: #3a564f;
+}
+.feedback_container .feedback_form .send {
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+}
+.feedback_container .feedback_form .send button{
+    border: none;
+    outline: none;
+    background: none;
+    border: .14rem solid #585e5b;
+    padding: 0.7rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .3s ease; 
+
+    background: #70a495;
+    color: #3a564f;
+}
+.feedback_container .feedback_form .send button:hover {
+    border: .14rem solid #000;
+    color: #000;
+}

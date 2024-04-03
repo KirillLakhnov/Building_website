@@ -1,0 +1,174 @@
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Кровля</title>
+    
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="../../css/catalog.css">
+    
+        <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <!-- <header>
+            <a href="#" class="logo">АРСЕНАЛ</a>
+
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Главная</a></li>
+                    <li>
+                        <a href="#">Каталог</a>
+                        
+                        <ul>
+                            <li><a href="roof.html">Кровля</a></li>
+                            <li><a href="#">Сухие смеси и грунтовки</a></li>
+                            <li><a href="#">Изоляционные материалы</a></li>
+                            <li><a href="#">Листовые материалы</a></li>
+                            <li><a href="#">Дорожные покрытия</a></li>
+                            <li><a href="#">Фасадные материалы</a></li>
+                            <li><a href="#">Подвесные потолки</a></li>
+                            <li><a href="#">Блоки для строительства</a></li>
+                            <li><a href="#">Металлопрокат</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../questions.html">Вопросы</a></li>
+                    <li><a href="../contacts.html">Контакты</a></li>
+                    <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                </ul>
+            </nav>
+        </header> -->
+
+        <section class="catalog">
+            <script type="module">
+                import {html, Component, render, useState, useEffect} from "../../js/js_libs/htm-preact.min.js";
+
+                import "../../js/js_libs/shim.min.js";
+                import "../../js/js_libs/xlsx.min.js";
+
+                function sheet2arr(sheet)
+                {
+                    const result = [];
+                    let row;
+                    let row_num;
+                    let col_num;
+                    const range = XLSX.utils.decode_range(sheet['!ref']);
+                    for(row_num = range.s.r; row_num <= range.e.r; row_num++) 
+                    {
+                        row = [];
+                        for(col_num = range.s.c; col_num <= range.e.c; col_num++)
+                        {
+                            const nextCell = sheet
+                            [
+                                XLSX.utils.encode_cell({ r: row_num, c: col_num })
+                            ];
+                            if(typeof nextCell === 'undefined') 
+                            {
+                                row.push(void 0);
+                            } 
+                            else 
+                            {
+                                row.push(nextCell.w);
+                            }
+                        }          
+                        result.push(row);
+                    }
+                    return result;
+                }
+
+                function app() 
+                {
+                    const [sheets, setSheets] = useState(null);
+                    const [currentSheet, setCurrentSheet] = useState(null);
+
+                    useEffect(() => {
+                        loadFile();
+                    }, []);
+
+                    function isNumber(n)
+                    {
+                        return !isNaN(parseFloat(n)) && isFinite(n);
+                    }
+
+                    function loadFile() 
+                    {
+                        const req = new XMLHttpRequest();
+                        req.open('GET', '../../catalog.xlsx', true);
+                        req.responseType = 'arraybuffer';
+                        req.onload = function(e) 
+                        {
+                            const workBook = XLSX.read(req.response, { type:'array' });
+                            const allSheets = Object.keys(workBook.Sheets).map((sheet) => 
+                            {
+                                return {
+                                    sheet: sheet,
+                                    rows: sheet2arr(workBook.Sheets[sheet])
+                                        .filter(row => row[4] && isNumber(row[4]))
+                                        .map(row => {
+                                            row[4] = +row[4];
+                                            return row;
+                                        }),
+                                };
+                            });
+                            setSheets(allSheets);
+                            setCurrentSheet(allSheets[0]);
+                        }
+                        req.send();
+                    }
+
+                    /*const className = classNames('product', {
+                        'font-size': props 
+                    });*/
+
+                    if(!currentSheet) 
+                    {
+                        return 'Загрузка...';
+                    } else 
+                    {
+                        return html`
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="product">
+                                            <div class="image">
+                                                <img src="${currentSheet.rows.map(row => html` 
+                                                    ${row[4]}`)}" alt="">
+                                            </div>
+
+                                            <div class="info">
+                                                <h3>${currentSheet.rows.map(row => html`
+                                                    ${row[2]}`)}</h3>
+
+                                                <div>
+                                                    <span class="price">
+                                                        ${currentSheet.rows.map(row => html` 
+                                                        ${row[3]}`)}<small>₽</small>/шт
+                                                    </span>
+
+                                                    <button class="add-to-card">
+                                                        <i class="fa-solid fa-cart-shopping">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        /*return html`
+                            <div>
+                                <ul>
+                                    ${currentSheet.rows.map(row => html`<li>
+                                        ${row[1]} -	${row[2]} - ${row[3]} руб/шт
+                                    </li>`)}
+                                </ul>
+                            </div>
+                        `;*/
+                    }
+                }
+
+                render(html`<${app}/>`, document.body);
+            </script>
+        </section>
+    </body>
+</html>
