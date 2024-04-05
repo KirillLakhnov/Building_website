@@ -51,7 +51,7 @@
             /** 
              * product_page() - генерирует модальное окно с информацией о выбранном товаре.
              **/
-            function product_page()
+            function product_card()
             {
                 let div_modal = document.createElement("div");
                 div_modal.className = "modal";
@@ -78,7 +78,7 @@
                 console.log(document);
             }
     
-            function cells() 
+            function generate_product_page() 
             {
                 const req = new XMLHttpRequest();
                 req.open('GET', '../../catalog.xlsx', true);
@@ -104,7 +104,7 @@
                     {
                         let button_product = document.createElement("button");
                         button_product.className = "product";
-                        button_product.onclick = product_page;
+                        button_product.onclick = product_card;
                         
                         container.append(button_product);
 
@@ -140,7 +140,7 @@
                 }
             }
             
-            cells();
+            generate_product_page();
         </script>
     </head>
 
