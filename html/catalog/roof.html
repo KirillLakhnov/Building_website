@@ -6,8 +6,142 @@
     
         <link rel="stylesheet" href="../../css/style.css">
         <link rel="stylesheet" href="../../css/catalog.css">
-    
+
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
+        <script src="../../js/generate_product_page.js" type="module"></script>
+        <script type="module">
+            import "../../js/js_libs/xlsx.min.js";
+
+            
+            /**
+             * sheet2arr(sheet) - обрабатывает данные выбранного листа из базы данных.
+             * Возвращается: двумерный массив данных (таблица).
+             **/
+            function sheet2arr(sheet)
+            {
+                const result = [];
+                let row;
+                let row_num;
+                let col_num;
+                const range = XLSX.utils.decode_range(sheet['!ref']);
+    
+                for(row_num = range.s.r + 1; row_num <= range.e.r; row_num++) 
+                {
+                    row = [];
+                    for(col_num = range.s.c; col_num <= range.e.c; col_num++)
+                    {
+                        const nextCell = sheet
+                        [
+                            XLSX.utils.encode_cell({ r: row_num, c: col_num })
+                        ];
+                        if(typeof nextCell === 'undefined') 
+                        {
+                            row.push(void 0);
+                        } 
+                        else 
+                        {
+                            row.push(nextCell.w);
+                        }
+                    }          
+                    result.push(row);
+                }
+                return result;
+            }
+            
+            /** 
+             * product_page() - генерирует модальное окно с информацией о выбранном товаре.
+             **/
+            function product_page()
+            {
+                let div_modal = document.createElement("div");
+                div_modal.className = "modal";
+
+                document.body.append(div_modal);
+
+                let div_modaL_window = document.createElement("div");
+                div_modaL_window.className = "modaL_window";
+                div_modaL_window.innerHTML = "<h1>ТОВАР</h1>"
+
+                div_modal.append(div_modaL_window);
+
+                let button_close = document.createElement("button");
+                button_close.className = "btn_close"
+                button_close.innerHTML = "x";
+
+                div_modaL_window.append(button_close);
+
+                let div_overlay = document.createElement("div");
+                div_overlay.className = "overlay";
+
+                div_modal.append(div_overlay);
+
+                console.log(document);
+            }
+    
+            function cells() 
+            {
+                const req = new XMLHttpRequest();
+                req.open('GET', '../../catalog.xlsx', true);
+                req.responseType = 'arraybuffer';
+                req.send();
+                req.onload = function() 
+                {
+                    //Обработка базы данных представленной в виде xlsx-файла.
+                    const workBook = XLSX.read(req.response, {type:'array'});
+                    const allSheets = Object.keys(workBook.Sheets).map((sheet) => 
+                    {
+                        return {
+                            sheet: sheet,
+                            rows: sheet2arr(workBook.Sheets[sheet])
+                        };
+                    });
+                    const roof_sheet = allSheets[0];
+
+                    //TODO: масштабировать; добавть обработку наличия товара;
+
+                    //Генерирует карточки товаров по данным из базы данных.
+                    for (let i = 0; i < 7; i++) 
+                    {
+                        let button_product = document.createElement("button");
+                        button_product.className = "product";
+                        button_product.onclick = product_page;
+                        
+                        container.append(button_product);
+
+                        let div_image = document.createElement("div");
+                        div_image.className = "image";
+                        div_image.innerHTML = "<img src=\"../../" + roof_sheet.rows[i][5] + "\" alt=\"\">";
+
+                        button_product.append(div_image);
+
+                        let div_info = document.createElement("div");
+                        div_info.className = "info";
+                        div_info.innerHTML = "<h3>" + roof_sheet.rows[i][2] + "</h3>";
+
+                        button_product.append(div_info);
+
+                        let div_price = document.createElement("div");
+                        div_price.className = "info-price";
+                        
+                        div_info.append(div_price);
+
+                        let span_price = document.createElement("span");
+                        span_price.className = "price";
+                        span_price.innerHTML = roof_sheet.rows[i][3] + "<small> ₽/</small>шт";
+
+                        div_price.append(span_price);
+
+                        let button_price = document.createElement("button");
+                        button_price.className = "add-to-cart";
+                        button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+
+                        div_price.append(button_price);
+                    }
+                }
+            }
+            
+            cells();
+        </script>
     </head>
 
     <body>
@@ -38,118 +172,8 @@
                 </ul>
             </nav>
         </header> -->
-        <div class="container">
-            <script type="module">
-                import {html, Component, render, useState, useEffect} from "../../js/js_libs/htm-preact.min.js";
 
-                import "../../js/js_libs/shim.min.js";
-                import "../../js/js_libs/xlsx.min.js";
-
-                function sheet2arr(sheet)
-                {
-                    const result = [];
-                    let row;
-                    let row_num;
-                    let col_num;
-                    const range = XLSX.utils.decode_range(sheet['!ref']);
-
-                    for(row_num = range.s.r + 1; row_num <= range.e.r; row_num++) 
-                    {
-                        row = [];
-                        for(col_num = range.s.c; col_num <= range.e.c; col_num++)
-                        {
-                            const nextCell = sheet
-                            [
-                                XLSX.utils.encode_cell({ r: row_num, c: col_num })
-                            ];
-                            if(typeof nextCell === 'undefined') 
-                            {
-                                row.push(void 0);
-                            } 
-                            else 
-                            {
-                                row.push(nextCell.w);
-                            }
-                        }          
-                        result.push(row);
-                    }
-                    return result;
-                }
-
-                function app() 
-                {
-                    const [sheets, setSheets] = useState(null);
-                    const [currentSheet, setCurrentSheet] = useState(null);
-
-                    useEffect(() => {
-                        load_file();
-                    }, []);
-
-                    function isNumber(n)
-                    {
-                        return !isNaN(parseFloat(n)) && isFinite(n);
-                    }
-
-                    function load_file() 
-                    {
-                        const req = new XMLHttpRequest();
-                        req.open('GET', '../../catalog.xlsx', true);
-                        req.responseType = 'arraybuffer';
-                        req.onload = function(e) 
-                        {
-                            const workBook = XLSX.read(req.response, { type:'array' });
-                            const allSheets = Object.keys(workBook.Sheets).map((sheet) => 
-                            {
-                                return {
-                                    sheet: sheet,
-                                    rows: sheet2arr(workBook.Sheets[sheet])
-                                };
-                            });
-                            setSheets(allSheets);
-                            setCurrentSheet(allSheets[0]);
-                        }
-                        req.send();
-                    }
-
-                    /*const className = classNames('product', {
-                        'font-size': props 
-                    });*/
-
-                    if(!currentSheet) 
-                    {
-                        return 'Загрузка...';
-                    } else 
-                    {
-                        return html`
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="product">
-                                        <div class="image">
-                                            <img src="../../${currentSheet.rows[0][5]}" alt="">
-                                        </div>
-
-                                        <div class="info">
-                                            <h3>${currentSheet.rows[0][2]}</h3>
-
-                                            <div>
-                                                <span class="price">
-                                                    ${currentSheet.rows[0][3]}<small>₽</small>/шт
-                                                </span>
-
-                                                <button class="add-to-card">
-                                                    <i class="fa-solid fa-cart-shopping">
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-
-                render(html`<${app}/>`, document.body);
-            </script>
+        <div class="container" id="container">
         </div>
     </body>
 </html>
