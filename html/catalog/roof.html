@@ -9,9 +9,10 @@
 
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
 
+        <script src="../../js/generate_shopping_cart.js"></script>
+
         <script type="module">
             import "../../js/js_libs/xlsx.min.js";
-            
             /**
              * sheet2arr(sheet) - обрабатывает данные выбранного листа из базы данных.
              * Возвращается: двумерный массив данных (таблица).
@@ -47,10 +48,23 @@
                 return result;
             }
 
-
-            function remove_modal_win()
+            function add_shopping_cart(roof_product)
             {
-                document.body.removeChild(document.getElementById("modal_win"));
+                if (localStorage.getItem(roof_product) == null)
+                {
+                    let product_obj = {
+                        product: roof_product,
+                        number: 1, 
+                    }
+
+                    localStorage.setItem(roof_product, JSON.stringify(product_obj));
+                }
+                else
+                {
+                    let product_obj = JSON.parse(localStorage.getItem(roof_product));
+                    product_obj.number += 1;
+                    localStorage.setItem(roof_product, JSON.stringify(product_obj));
+                }
             }
 
             /** 
@@ -70,41 +84,46 @@
                 let button_close = document.createElement("button");
                 button_close.className = "btn_close";
                 button_close.innerHTML = "x";
-                button_close.onclick = remove_modal_win;
+                button_close.onclick = () => document.body.removeChild(document.getElementById("modal_win"));
                 div_modal_window.append(button_close);
 
-                let h3 = document.createElement("h2");
-                h3.innerHTML = sheet.rows[col][2];
-                div_modal_window.append(h3);
+                let h2 = document.createElement("h2");
+                h2.innerHTML = sheet.rows[col][2];
+                div_modal_window.append(h2);
+
+                let div_general_info = document.createElement("div");
+                div_general_info.className = "general_info";
+                div_modal_window.append(div_general_info);
+
+                let div_description = document.createElement("div");
+                div_description.className = "description_card";
+                div_description.innerHTML = "<div class=\"description_card_text\"><h3>Описание</h3><p>" + sheet.rows[col][6] + "</p></div>";
+                div_general_info.append(div_description);
 
                 let div_image = document.createElement("div");
                 div_image.className = "image_card";
                 div_image.innerHTML = "<img src=\"../../" + sheet.rows[col][5] + "\" alt=\"\">";
-                div_modal_window.append(div_image);
-
-                let div_description = document.createElement("div");
-                div_description.className = "description_card";
-                div_description.innerHTML = "<h3>Описание</h3><p>" + sheet.rows[col][6] + "</p>";
-                div_modal_window.append(div_description);
+                div_description.prepend(div_image);
 
                 //TODO: стандарт характеристики.
                 let div_characteristic = document.createElement("div");
                 div_characteristic.className = "characteristic_card";
                 div_characteristic.innerHTML = "<h3>Характеристика</h3><p>" + sheet.rows[col][7] + "</p>";
-                div_modal_window.append(div_characteristic);
+                div_general_info.append(div_characteristic);
 
                 let div_price = document.createElement("div");
                 div_price.className = "by_card";
                 div_modal_window.append(div_price);
 
                 let span_price = document.createElement("span");
-                span_price.className = "price_card";
+                span_price.className = "price";
                 span_price.innerHTML = "<h3>Цена: " + sheet.rows[col][3] + "<small> ₽/</small>шт</h3>";
                 div_price.append(span_price);
 
-                let button_price = document.createElement("price");
+                let button_price = document.createElement("button");
                 button_price.className = "add-to-cart";
                 button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+                button_price.onclick = () => add_shopping_cart(sheet.rows[col]);
                 div_price.append(button_price);
 
                 console.log(document);
@@ -161,12 +180,14 @@
                         let button_price = document.createElement("button");
                         button_price.className = "add-to-cart";
                         button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+                        button_price.onclick = () => add_shopping_cart(roof_sheet.rows[i]);
                         div_price.append(button_price);
                     }
                 }
             }
             
             generate_product_page();
+            console.log();
         </script>
     </head>
 
@@ -194,7 +215,7 @@
                     </li>
                     <li><a href="../questions.html">Вопросы</a></li>
                     <li><a href="../contacts.html">Контакты</a></li>
-                    <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li><button onclick="generate_shopping_cart()"><i class="fa-solid fa-cart-shopping"></i></button></li>
                 </ul>
             </nav>
         </header>

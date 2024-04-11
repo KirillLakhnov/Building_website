@@ -6,21 +6,24 @@
     flex-wrap: wrap;
     justify-content: center;
 
-    padding: 6rem 2rem;
+    padding: 4rem 0rem;
 
-    display: grid;
-
-    grid-template-columns: repeat(4, 2fr);
-    grid-template-rows: repeat(3, 250px);
+    display: flex;   
 }
+
+
 .product {
     background: #517d71;
     border: .14rem solid #585e5b;
 
     cursor: pointer;
 
-    margin: 1.2rem 1rem;
-    padding: 1rem 3rem;
+    width: 22rem;
+    height: 29rem;
+
+    margin: 1rem 1rem;
+    padding: 1rem 1rem;
+
     border-radius: 1.5rem;
     transition: 0.5s;
 }
@@ -28,25 +31,31 @@
     border: .14rem solid #000;
 }
 .image {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 1rem;
+    width: 15rem;
+    height: 15rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 .image img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
-    border-radius: 20%;
+    border-radius: 7%;
+
+    background: #fff;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, .4);
+    border: .14rem solid #585e5b;
 }
 .info h3 {
+    margin-top: 1.5rem;
     font-size: 21px;
 }
 .info-price {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 .add-to-cart {
     border: none;
@@ -76,6 +85,7 @@
 
 .modal {
     position: fixed;
+
     top: 0;
     left: 0;
     width: 100%;
@@ -91,29 +101,61 @@
 .modal_window {
     background-color: #70a495;
     position: relative;
-    width: 550px;
+    width: 800px;
     border-radius: 10px;
     box-shadow: 0 12px 18px rgba(0, 0, 0, .4);
     padding: 30px;
 }
-.btn_close {
-    position: flex;
-    padding: 4px;
-    float: right;
-
-    align-items: center;
-
-    color: #585e5b;
-    border: .14rem solid #585e5b;
-    background: #70a495;
-
-    cursor: pointer;
-    transition: .3s ease; 
-
-    border-radius: 30%;
+.modal_window h2 {
+    margin-bottom: 1rem;
 }
-.btn_close:hover {
-    color: #000;
-    border: .14rem solid #000;
-} 
+.general_info {
+    display: grid;
+}
+.image_card {
+    width: 300px;
+    height: 300px;
+    margin-right: 1rem;
+
+    float: left;
+    margin: 0px 20px 20px 0;
+}
+.image_card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    border-radius: 7%;
+
+    background: #fff;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, .4);
+    border: .14rem solid #585e5b;
+}
+.description_card_text{
+
+}
+.description_card_text h3{
+}
+.description_card_text p{
+
+}
+.characteristic_card {
+
+}
+.characteristic_card h3 {
+
+}
+.characteristic_card p {
+
+}
+.by_card {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+
+
+
 
