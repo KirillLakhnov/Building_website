@@ -61,7 +61,7 @@ function add_shopping_cart(product)
 /** 
  * product_page() - генерирует модальное окно с информацией о выбранном товаре.
  **/
-function product_card(sheet, col)
+function product_card(product)
 {
     let div_modal = document.createElement("div");
     div_modal.className = "modal";
@@ -79,7 +79,7 @@ function product_card(sheet, col)
     div_modal_window.append(button_close);
 
     let h2 = document.createElement("h2");
-    h2.innerHTML = sheet.rows[col][2];
+    h2.innerHTML = product[2];
     div_modal_window.append(h2);
 
     let div_general_info = document.createElement("div");
@@ -88,17 +88,17 @@ function product_card(sheet, col)
 
     let div_description = document.createElement("div");
     div_description.className = "description_card";
-    div_description.innerHTML = "<div class=\"description_card_text\"><h3>Описание</h3><p>" + sheet.rows[col][6] + "</p></div>";
+    div_description.innerHTML = "<div class=\"description_card_text\"><h3>Описание</h3><p>" + product[6] + "</p></div>";
     div_general_info.append(div_description);
 
     let div_image = document.createElement("div");
     div_image.className = "image_card";
-    div_image.innerHTML = "<img src=\"../../" + sheet.rows[col][5] + "\" alt=\"\">";
+    div_image.innerHTML = "<img src=\"../../" + product[5] + "\" alt=\"\">";
     div_description.prepend(div_image);
 
     let div_characteristic = document.createElement("div");
     div_characteristic.className = "characteristic_card";
-    div_characteristic.innerHTML = "<h3>Характеристика</h3><p>" + sheet.rows[col][7] + "</p>";
+    div_characteristic.innerHTML = "<h3>Характеристика</h3><p>" + product[7] + "</p>";
     div_general_info.append(div_characteristic);
 
     let div_price = document.createElement("div");
@@ -107,69 +107,10 @@ function product_card(sheet, col)
 
     let span_price = document.createElement("span");
     span_price.className = "price";
-    span_price.innerHTML = "<h3>Цена: " + sheet.rows[col][3] + "<small> ₽/</small>шт</h3>";
+    span_price.innerHTML = "<h3>Цена: " + product[3] + "<small> ₽/</small>шт</h3>";
     div_price.append(span_price);
 
-    if (+sheet.rows[col][4] != 0)
-    {
-        let product_obj_json = localStorage.getItem(sheet.rows[col])
-        if (product_obj_json != null)
-        {
-            let product_obj = JSON.parse(product_obj_json);
-
-            let div_buttons_num = document.createElement("div");
-            div_buttons_num.className = "buttons_num";
-            div_price.append(div_buttons_num);
-
-            let button_plus = document.createElement("button");
-            button_plus.className = "add-to-cart";
-            button_plus.innerHTML = "<p><strong>+</strong></p>";
-            button_plus.onclick = () => {
-                product_obj.number += 1;
-                localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
-
-                number_product.innerHTML = product_obj.number + "шт";
-
-                let number_product_col = document.getElementById("number_product_" + sheet.rows[col]);
-                number_product_col.innerHTML = product_obj.number + "шт";
-            }
-            div_buttons_num.append(button_plus);
-
-            let number_product = document.createElement("h3");
-            number_product.innerHTML = product_obj.number + "шт";
-            div_buttons_num.append(number_product);
-
-            let button_minus = document.createElement("button");
-            button_minus.className = "add-to-cart";
-            button_minus.innerHTML = "<p><strong>-</strong><p>";
-            button_minus.onclick = () => {
-                product_obj.number -= 1;
-                
-                localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
-
-                number_product.innerHTML = product_obj.number + "шт";
-
-                let number_product_col = document.getElementById("number_product_" + sheet.rows[col]);
-                number_product_col.innerHTML = product_obj.number + "шт";
-            }
-            div_buttons_num.append(button_minus);
-        }
-        else
-        {
-            let button_price = document.createElement("button");
-            button_price.className = "add-to-cart";
-            button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-            button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
-            div_price.append(button_price);
-        }
-    }
-    else
-    {
-        let div_product_missing = document.createElement("div");
-        div_product_missing.className = "product_missing";
-        div_product_missing.innerHTML = "<p>Товара нет в наличии</p>"
-        div_price.append(div_product_missing);
-    }
+    button_add_to_card(product, div_price);
 }
 
 /**
@@ -203,7 +144,7 @@ export default function generate_product_page(index)
                
             let button_product = document.createElement("button");
             button_product.className = "product";
-            button_product.onclick = () => product_card(current_sheet, col);
+            button_product.onclick = () => product_card(current_sheet.rows[col]);
             container.append(button_product);
 
             let div_image = document.createElement("div");
@@ -225,62 +166,81 @@ export default function generate_product_page(index)
             span_price.innerHTML = current_sheet.rows[i][3] + "<small> ₽/</small>шт";
             div_price.append(span_price);
 
-            if (+current_sheet.rows[i][4] != 0)
-            {
-                const product_obj_json = localStorage.getItem(current_sheet.rows[i])
-                if (product_obj_json != null)
+            button_add_to_card(current_sheet.rows[i], div_price);
+
+            i++;
+        }
+    }
+}
+
+function button_add_to_card(product, prev_div)
+{
+    if (+product[4] != 0)
+    {
+        const product_obj_json = localStorage.getItem(product)
+        if (product_obj_json != null)
+        {
+            let product_obj = JSON.parse(product_obj_json);
+
+            let div_buttons_num = document.createElement("div");
+            div_buttons_num.className = "buttons_num";
+            prev_div.append(div_buttons_num);
+
+            let button_plus = document.createElement("button");
+            button_plus.className = "add-to-cart";
+            button_plus.innerHTML = "<p><strong>+</strong></p>";
+            button_plus.onclick = () => {
+                product_obj.number += 1;
+                localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+
+                number_product.innerHTML = product_obj.number + "шт";
+            }
+            div_buttons_num.append(button_plus);
+
+            let number_product = document.createElement("h3");
+            number_product.setAttribute("id", "number_product_" + product[2]);
+            number_product.innerHTML = product_obj.number + "шт";
+            div_buttons_num.append(number_product);
+
+            let button_minus = document.createElement("button");
+            button_minus.className = "add-to-cart";
+            button_minus.innerHTML = "<p><strong>-</strong><p>";
+            button_minus.onclick = () => {
+                product_obj.number -= 1;
+
+                if (product_obj.number <= 0)
                 {
-                    let product_obj = JSON.parse(product_obj_json);
+                    div_price.removeChild(div_buttons_num);
+                    localStorage.removeItem(product_obj.product);
 
-                    let div_buttons_num = document.createElement("div");
-                    div_buttons_num.className = "buttons_num";
-                    div_price.append(div_buttons_num);
-
-                    let button_plus = document.createElement("button");
-                    button_plus.className = "add-to-cart";
-                    button_plus.innerHTML = "<p><strong>+</strong></p>";
-                    button_plus.onclick = () => {
-                        product_obj.number += 1;
-                        localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
-
-                        number_product.innerHTML = product_obj.number + "шт";
-                    }
-                    div_buttons_num.append(button_plus);
-
-                    let number_product = document.createElement("h3");
-                    number_product.setAttribute("id", "number_product_" + current_sheet.rows[i]);
-                    number_product.innerHTML = product_obj.number + "шт";
-                    div_buttons_num.append(number_product);
-
-                    let button_minus = document.createElement("button");
-                    button_minus.className = "add-to-cart";
-                    button_minus.innerHTML = "<p><strong>-</strong><p>";
-                    button_minus.onclick = () => {
-                        product_obj.number -= 1;
-                        localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
-
-                        number_product.innerHTML = product_obj.number + "шт";
-                    }
-                    div_buttons_num.append(button_minus);
-                }
-                else
-                {
                     let button_price = document.createElement("button");
                     button_price.className = "add-to-cart";
                     button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
                     button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
                     div_price.append(button_price);
                 }
+                else
+                {
+                    localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+                    number_product.innerHTML = product_obj.number + "шт";
+                }
             }
-            else
-            {
-                let div_product_missing = document.createElement("div");
-                div_product_missing.className = "product_missing";
-                div_product_missing.innerHTML = "<p>Товара нет в наличии</p>"
-                div_price.append(div_product_missing);
-            }
-
-            i++;
+            div_buttons_num.append(button_minus);
         }
+        else
+        {
+            let button_price = document.createElement("button");
+            button_price.className = "add-to-cart";
+            button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+            button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
+            prev_div.append(button_price);
+        }
+    }
+    else
+    {
+        let div_product_missing = document.createElement("div");
+        div_product_missing.className = "product_missing";
+        div_product_missing.innerHTML = "<p>Товара нет в наличии</p>"
+        prev_div.append(div_product_missing);
     }
 }
