@@ -104,7 +104,6 @@ function generate_shopping_cart()
         button_price.className = "buy_btn";
         button_price.setAttribute("id", "buy_btn");
         button_price.innerHTML = "<h3>Купить</h3>";
-        //button_price.onclick = () => add_shopping_cart(sheet.rows[col]);
         div_info_total_price.append(button_price);
     }
 }
