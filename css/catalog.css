@@ -56,6 +56,14 @@
     justify-content: space-between;
     margin-top: 20px;
 }
+.buttons_num {
+    display: flex;
+}
+.buttons_num h3 {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
 .add-to-cart {
     border: none;
     width: 40px;

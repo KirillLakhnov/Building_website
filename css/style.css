@@ -200,7 +200,6 @@ nav ul li:hover > ul {
     box-shadow: 0 12px 18px rgba(0, 0, 0, .4);
     padding: 30px;  
 }
-
 .ul_shopping_cart {
     overflow-y: auto;
     height: 600px;

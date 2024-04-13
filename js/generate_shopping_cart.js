@@ -55,6 +55,9 @@ function generate_shopping_cart()
             span_price.innerHTML = total_price_count(products, fields_count) + "<small> ₽</small>";
 
             if_total_price_zero(products, fields_count, div_info_total_price, span_price);
+
+            let number_product_out = document.getElementById("number_product_" + products[i].product);
+            number_product_out.innerHTML = product_obj.number + "шт";
         };
         div_quantity_change.append(button_plus);
 
@@ -76,6 +79,9 @@ function generate_shopping_cart()
             }
 
             if_total_price_zero(products, fields_count, div_info_total_price, span_price);
+
+            let number_product_out = document.getElementById("number_product_" + products[i].product);
+            number_product_out.innerHTML = products[i].number + "шт";
         };
         div_quantity_change.append(button_minus);
     }

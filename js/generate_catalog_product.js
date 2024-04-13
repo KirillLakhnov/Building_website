@@ -96,7 +96,6 @@ function product_card(sheet, col)
     div_image.innerHTML = "<img src=\"../../" + sheet.rows[col][5] + "\" alt=\"\">";
     div_description.prepend(div_image);
 
-    //TODO: стандарт характеристики.
     let div_characteristic = document.createElement("div");
     div_characteristic.className = "characteristic_card";
     div_characteristic.innerHTML = "<h3>Характеристика</h3><p>" + sheet.rows[col][7] + "</p>";
@@ -113,11 +112,56 @@ function product_card(sheet, col)
 
     if (+sheet.rows[col][4] != 0)
     {
-        let button_price = document.createElement("button");
-        button_price.className = "add-to-cart";
-        button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-        button_price.onclick = () => add_shopping_cart(sheet.rows[col]);
-        div_price.append(button_price);
+        let product_obj_json = localStorage.getItem(sheet.rows[col])
+        if (product_obj_json != null)
+        {
+            let product_obj = JSON.parse(product_obj_json);
+
+            let div_buttons_num = document.createElement("div");
+            div_buttons_num.className = "buttons_num";
+            div_price.append(div_buttons_num);
+
+            let button_plus = document.createElement("button");
+            button_plus.className = "add-to-cart";
+            button_plus.innerHTML = "<p><strong>+</strong></p>";
+            button_plus.onclick = () => {
+                product_obj.number += 1;
+                localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+
+                number_product.innerHTML = product_obj.number + "шт";
+
+                let number_product_col = document.getElementById("number_product_" + sheet.rows[col]);
+                number_product_col.innerHTML = product_obj.number + "шт";
+            }
+            div_buttons_num.append(button_plus);
+
+            let number_product = document.createElement("h3");
+            number_product.innerHTML = product_obj.number + "шт";
+            div_buttons_num.append(number_product);
+
+            let button_minus = document.createElement("button");
+            button_minus.className = "add-to-cart";
+            button_minus.innerHTML = "<p><strong>-</strong><p>";
+            button_minus.onclick = () => {
+                product_obj.number -= 1;
+                
+                localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+
+                number_product.innerHTML = product_obj.number + "шт";
+
+                let number_product_col = document.getElementById("number_product_" + sheet.rows[col]);
+                number_product_col.innerHTML = product_obj.number + "шт";
+            }
+            div_buttons_num.append(button_minus);
+        }
+        else
+        {
+            let button_price = document.createElement("button");
+            button_price.className = "add-to-cart";
+            button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+            button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
+            div_price.append(button_price);
+        }
     }
     else
     {
@@ -151,8 +195,6 @@ export default function generate_product_page(index)
         });
         const current_sheet = allSheets[index];
 
-        //TODO: добавть обработку наличия товара;
-
         //Генерирует карточки товаров по данным из базы данных.
         let i = 0;
         while (typeof current_sheet.rows[i] != "undefined")
@@ -185,11 +227,50 @@ export default function generate_product_page(index)
 
             if (+current_sheet.rows[i][4] != 0)
             {
-                let button_price = document.createElement("button");
-                button_price.className = "add-to-cart";
-                button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-                button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
-                div_price.append(button_price);
+                const product_obj_json = localStorage.getItem(current_sheet.rows[i])
+                if (product_obj_json != null)
+                {
+                    let product_obj = JSON.parse(product_obj_json);
+
+                    let div_buttons_num = document.createElement("div");
+                    div_buttons_num.className = "buttons_num";
+                    div_price.append(div_buttons_num);
+
+                    let button_plus = document.createElement("button");
+                    button_plus.className = "add-to-cart";
+                    button_plus.innerHTML = "<p><strong>+</strong></p>";
+                    button_plus.onclick = () => {
+                        product_obj.number += 1;
+                        localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+
+                        number_product.innerHTML = product_obj.number + "шт";
+                    }
+                    div_buttons_num.append(button_plus);
+
+                    let number_product = document.createElement("h3");
+                    number_product.setAttribute("id", "number_product_" + current_sheet.rows[i]);
+                    number_product.innerHTML = product_obj.number + "шт";
+                    div_buttons_num.append(number_product);
+
+                    let button_minus = document.createElement("button");
+                    button_minus.className = "add-to-cart";
+                    button_minus.innerHTML = "<p><strong>-</strong><p>";
+                    button_minus.onclick = () => {
+                        product_obj.number -= 1;
+                        localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+
+                        number_product.innerHTML = product_obj.number + "шт";
+                    }
+                    div_buttons_num.append(button_minus);
+                }
+                else
+                {
+                    let button_price = document.createElement("button");
+                    button_price.className = "add-to-cart";
+                    button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+                    button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
+                    div_price.append(button_price);
+                }
             }
             else
             {
