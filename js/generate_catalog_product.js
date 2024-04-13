@@ -177,7 +177,8 @@ function button_add_to_card(product, prev_div)
 {
     if (+product[4] != 0)
     {
-        const product_obj_json = localStorage.getItem(product)
+        const product_obj_json = localStorage.getItem(product);
+
         if (product_obj_json != null)
         {
             let product_obj = JSON.parse(product_obj_json);
@@ -190,15 +191,20 @@ function button_add_to_card(product, prev_div)
             button_plus.className = "add-to-cart";
             button_plus.innerHTML = "<p><strong>+</strong></p>";
             button_plus.onclick = () => {
+                product_obj = JSON.parse(localStorage.getItem(product));
                 product_obj.number += 1;
                 localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
 
-                number_product.innerHTML = product_obj.number + "шт";
+                let number_product_elements = document.getElementsByClassName("number_product_" + product[2]);
+                for (let i = 0; i < number_product_elements.length; i++)
+                {
+                    number_product_elements[i].innerHTML = product_obj.number + "шт";
+                }
             }
             div_buttons_num.append(button_plus);
 
             let number_product = document.createElement("h3");
-            number_product.setAttribute("id", "number_product_" + product[2]);
+            number_product.className = "number_product_" + product[2];
             number_product.innerHTML = product_obj.number + "шт";
             div_buttons_num.append(number_product);
 
@@ -206,23 +212,35 @@ function button_add_to_card(product, prev_div)
             button_minus.className = "add-to-cart";
             button_minus.innerHTML = "<p><strong>-</strong><p>";
             button_minus.onclick = () => {
+                product_obj = JSON.parse(localStorage.getItem(product));
                 product_obj.number -= 1;
 
                 if (product_obj.number <= 0)
                 {
-                    div_price.removeChild(div_buttons_num);
+                    prev_div.removeChild(div_buttons_num);
                     localStorage.removeItem(product_obj.product);
 
                     let button_price = document.createElement("button");
                     button_price.className = "add-to-cart";
+                    button_price.setAttribute("id", product[2]);
                     button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-                    button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
-                    div_price.append(button_price);
+                    button_price.onclick = () => {
+                        add_shopping_cart(product);
+
+                        prev_div.removeChild(button_price);
+                        button_add_to_card(product, prev_div)
+                    }
+                    prev_div.append(button_price);
                 }
                 else
                 {
                     localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
-                    number_product.innerHTML = product_obj.number + "шт";
+
+                    let number_product_elements = document.getElementsByClassName("number_product_" + product[2]);
+                    for (let i = 0; i < number_product_elements.length; i++)
+                    {
+                        number_product_elements[i].innerHTML = product_obj.number + "шт";
+                    }
                 }
             }
             div_buttons_num.append(button_minus);
@@ -231,8 +249,14 @@ function button_add_to_card(product, prev_div)
         {
             let button_price = document.createElement("button");
             button_price.className = "add-to-cart";
+            button_price.setAttribute("id", product[2]);
             button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-            button_price.onclick = () => add_shopping_cart(current_sheet.rows[col]);
+            button_price.onclick = () => {
+                add_shopping_cart(product);
+
+                prev_div.removeChild(button_price);
+                button_add_to_card(product, prev_div)
+            }
             prev_div.append(button_price);
         }
     }
