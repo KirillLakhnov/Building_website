@@ -1,5 +1,7 @@
 import "./js_libs/xlsx.min.js";
 
+const ADD_TO_CARD_BUTTON = {OUT: 0, IN: 1};
+
 /**
  * sheet2arr(sheet) - обрабатывает данные выбранного листа из базы данных.
  * Возвращается: двумерный массив данных (таблица).
@@ -103,6 +105,7 @@ function product_card(product)
 
     let div_price = document.createElement("div");
     div_price.className = "by_card";
+    //div_price.setAttribute("id", "by_card_" + product[2]);
     div_modal_window.append(div_price);
 
     let span_price = document.createElement("span");
@@ -110,7 +113,7 @@ function product_card(product)
     span_price.innerHTML = "<h3>Цена: " + product[3] + "<small> ₽/</small>шт</h3>";
     div_price.append(span_price);
 
-    button_add_to_card(product, div_price);
+    button_add_to_card(product, div_price, ADD_TO_CARD_BUTTON.IN);
 }
 
 /**
@@ -159,6 +162,7 @@ export default function generate_product_page(index)
 
             let div_price = document.createElement("div");
             div_price.className = "info-price";
+            div_price.setAttribute("id", "info-price-" + current_sheet.rows[i][2]);
             div_info.append(div_price);
 
             let span_price = document.createElement("span");
@@ -166,18 +170,18 @@ export default function generate_product_page(index)
             span_price.innerHTML = current_sheet.rows[i][3] + "<small> ₽/</small>шт";
             div_price.append(span_price);
 
-            button_add_to_card(current_sheet.rows[i], div_price);
+            button_add_to_card(current_sheet.rows[i], div_price, ADD_TO_CARD_BUTTON.OUT);
 
             i++;
         }
     }
 }
 
-function button_add_to_card(product, prev_div)
+function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON_POSITION)
 {
     if (+product[4] != 0)
     {
-        const product_obj_json = localStorage.getItem(product);
+        let product_obj_json = localStorage.getItem(product);
 
         if (product_obj_json != null)
         {
@@ -185,6 +189,10 @@ function button_add_to_card(product, prev_div)
 
             let div_buttons_num = document.createElement("div");
             div_buttons_num.className = "buttons_num";
+            if (ADD_TO_CARD_BUTTON_POSITION == ADD_TO_CARD_BUTTON.OUT)
+            {
+                div_buttons_num.setAttribute("id", "buttons_num_" + product[2]);
+            }
             prev_div.append(div_buttons_num);
 
             let button_plus = document.createElement("button");
@@ -220,17 +228,16 @@ function button_add_to_card(product, prev_div)
                     prev_div.removeChild(div_buttons_num);
                     localStorage.removeItem(product_obj.product);
 
-                    let button_price = document.createElement("button");
-                    button_price.className = "add-to-cart";
-                    button_price.setAttribute("id", product[2]);
-                    button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-                    button_price.onclick = () => {
-                        add_shopping_cart(product);
+                    button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON_POSITION);
 
-                        prev_div.removeChild(button_price);
-                        button_add_to_card(product, prev_div)
+                    if (ADD_TO_CARD_BUTTON_POSITION == ADD_TO_CARD_BUTTON.IN)
+                    {
+                        let prev_div_out = document.getElementById("info-price-" + product[2]);
+                        let button_num_out = document.getElementById("buttons_num_" + product[2]);
+                        console.log(button_num_out);
+                        prev_div_out.removeChild(button_num_out);
+                        button_add_to_card(product, prev_div_out, ADD_TO_CARD_BUTTON.OUT);
                     }
-                    prev_div.append(button_price);
                 }
                 else
                 {
@@ -249,13 +256,24 @@ function button_add_to_card(product, prev_div)
         {
             let button_price = document.createElement("button");
             button_price.className = "add-to-cart";
-            button_price.setAttribute("id", product[2]);
             button_price.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+
+            if (ADD_TO_CARD_BUTTON_POSITION == ADD_TO_CARD_BUTTON.OUT)
+            {
+                button_price.setAttribute("id", "add-to-cart-" + product[2]);
+            }
             button_price.onclick = () => {
                 add_shopping_cart(product);
-
                 prev_div.removeChild(button_price);
-                button_add_to_card(product, prev_div)
+                button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON_POSITION);
+
+                if (ADD_TO_CARD_BUTTON_POSITION == ADD_TO_CARD_BUTTON.IN)
+                {
+                    let prev_div_out = document.getElementById("info-price-" + product[2]);
+                    let button_price_out = document.getElementById("add-to-cart-" + product[2]);
+                    prev_div_out.removeChild(button_price_out);
+                    button_add_to_card(product, prev_div_out, ADD_TO_CARD_BUTTON.OUT);
+                }
             }
             prev_div.append(button_price);
         }
