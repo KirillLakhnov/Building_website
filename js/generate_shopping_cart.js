@@ -1,4 +1,6 @@
-function generate_shopping_cart()
+import button_add_to_card from "./generate_button_add_to_card.js";
+
+export default function generate_shopping_cart()
 {
     let div_shopping_cart_modal = document.createElement("div");
     div_shopping_cart_modal.className = "shopping_cart_modal";
@@ -54,10 +56,13 @@ function generate_shopping_cart()
             number_product.innerHTML = products[i].number + "шт";
             span_price.innerHTML = total_price_count(products, fields_count) + "<small> ₽</small>";
 
-            if_total_price_zero(products, fields_count, div_info_total_price, span_price);
+            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[2]);
+            for (let i = 0; i < number_product_elements.length; i++)
+            {
+                number_product_elements[i].innerHTML = products[i].number + "шт";
+            }
 
-            /*let number_product_out = document.getElementById("number_product_" + products[i].product[2]);
-            number_product_out.innerHTML = product_obj.number + "шт";*/
+            if_total_price_zero(products, fields_count, div_info_total_price, span_price);
         };
         div_quantity_change.append(button_plus);
 
@@ -72,16 +77,27 @@ function generate_shopping_cart()
             number_product.innerHTML = products[i].number  + "шт";
             span_price.innerHTML = total_price_count(products, fields_count) + "<small> ₽</small>";
 
+            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[2]);
+            for (let i = 0; i < number_product_elements.length; i++)
+            {
+                number_product_elements[i].innerHTML = products[i].number + "шт";
+            }
+
             if (products[i].number <= 0)
             {
                 ul_shopping_cart.removeChild(document.getElementById(products[i].product[2]));
                 localStorage.removeItem(products[i].product);
+
+                let info_price_add_to_card_out = document.getElementById("info-price-" + products[i].product[2]);
+                let button_add_to_card_out = document.getElementById("buttons_num_" + products[i].product[2]);
+                if (button_add_to_card_out != null)
+                {
+                    info_price_add_to_card_out.removeChild(button_add_to_card_out);
+                    button_add_to_card(products[i].product, info_price_add_to_card_out, 0);
+                }
             }
 
             if_total_price_zero(products, fields_count, div_info_total_price, span_price);
-
-            /*let number_product_out = document.getElementById("number_product_" + products[i].product[2]);
-            number_product_out.innerHTML = products[i].number + "шт";*/
         };
         div_quantity_change.append(button_minus);
     }

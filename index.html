@@ -8,7 +8,14 @@
 
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
 
-        <script src="./js/generate_shopping_cart.js"></script>
+        <script type="module">
+            import generate_shopping_cart from "../../js/generate_shopping_cart.js";
+
+            let button = document.createElement("button");
+            button.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
+            button.onclick = generate_shopping_cart;
+            button_shopping_cart.append(button);
+        </script>
     </head>
 
 
@@ -36,7 +43,7 @@
                     </li>
                     <li><a href="html/questions.html">Вопросы</a></li>
                     <li><a href="html/contacts.html">Контакты</a></li>
-                    <li><button onclick="generate_shopping_cart()"><i class="fa-solid fa-cart-shopping"></i></button></li>
+                    <li id="button_shopping_cart"></button></li>
                 </ul>
             </nav>
         </header>
