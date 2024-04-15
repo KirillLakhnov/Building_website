@@ -324,3 +324,7 @@ nav ul li:hover > ul {
     font-weight: 700;
     font-size: 25px;
 }
+
+.contatiner_form_payment {
+    display: grid;
+}
