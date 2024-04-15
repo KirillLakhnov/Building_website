@@ -1,4 +1,12 @@
-const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1}
+const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1};
+const FORM_DATA_ERROR = {
+    GOOD: 0, 
+    ERROR_NAME: 1,
+    ERROR_EMAIL: 2,
+    ERROR_PHONE: 3,
+    ERROR_CITY: 4,
+    ERROR_ADRESS: 5,
+};
 
 export default function buy_products(total_price, div_shopping_cart_modal_window)
 {    
@@ -20,17 +28,17 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     let form_contatiner = document.createElement("form");
     form_contatiner.className = "contatiner_form_payment";
     form_contatiner.innerHTML = "\
-        <input type=\"text\" class=\"name\" placeholder=\"ФИО\">\
-        <input type=\"email\" class=\"email\" placeholder=\"E-mail\">\
-        <input type=\"text\" class=\"phone\" placeholder=\"Телефон\">\
+        <input type=\"text\" name=\"name\" placeholder=\"ФИО\">\
+        <input type=\"email\" name=\"email\" placeholder=\"E-mail\">\
+        <input type=\"text\" name=\"phone\" placeholder=\"Телефон\">\
     ";
     div_shopping_cart_modal_window.append(form_contatiner);
 
     let div_label_type_shipment = document.createElement("div");
     div_label_type_shipment.className = "label_type_shipment";
     div_label_type_shipment.innerHTML = "\
-        <label><p><strong>Заберу самостоятельно</strong></p><input type=\"checkbox\" class=\"check_myself\" id=\"check_myself\"></label>\
-        <label><p><strong>Доставка CDEK</strong></p><input type=\"checkbox\" class=\"check_CDEK\" id=\"check_CDEK\"></label>\
+        <label><input type=\"checkbox\" class=\"check\" id=\"check_myself\"><p><strong>Заберу самостоятельно</strong></p></label>\
+        <label><input type=\"checkbox\" class=\"check\" id=\"check_CDEK\"><p><strong>Доставка CDEK</strong></p></label>\
     ";
     form_contatiner.append(div_label_type_shipment);
 
@@ -54,8 +62,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
             div_cdek.className = "cdek_send";
             div_cdek.setAttribute("id", "cdek_send");
             div_cdek.innerHTML = "\
-                <input type=\"text\" class=\"city\" placeholder=\"Город\">\
-                <input type=\"text\" class=\"address\" placeholder=\"Адрес\">\
+                <input type=\"text\" name=\"city\" placeholder=\"Город\">\
+                <input type=\"text\" name=\"address\" placeholder=\"Адрес\">\
             ";
             div_label_type_shipment.after(div_cdek);
 
@@ -91,51 +99,87 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     form_contatiner.addEventListener("submit", function(event)
     {
         event.preventDefault();
-        processing_form_data(form_contatiner);
-        localStorage.clear();
-        document.body.removeChild(document.getElementById("modal_win"));
+        let result_processing_form_data = processing_form_data(form_contatiner, div_shopping_cart_modal_window);
+        if (result_processing_form_data === true)
+        {
+            //localStorage.clear();
+            document.body.removeChild(document.getElementById("modal_win"));
+        }
+        else
+        {
+            form_contatiner.reset();
+        }
     })
 }
 
-function processing_form_data(form)
+async function processing_form_data(form, div_shopping_cart_modal_window)
 {
-    let inputs = form.querySelectorAll("input");
+    let products_in_card = [];
+    const localStorage_fields_count = localStorage.length;
 
-    let name = "";
-    let email = "";
-    let phone = "";
-    let status_delivery = STATUS_DELIVERY.MYSELF;
-    let city = "";
-    let address = "";
+    for (let i = 0; i < localStorage_fields_count; i++)
+    {
+        const key = localStorage.key(i);
+        const product_obj = JSON.parse(localStorage.getItem(key));
+        
+        products_in_card.push(product_obj);
+    }
+    let products_in_card_json = JSON.stringify(products_in_card);
 
-    for(const input of inputs)
+    //validation_form_data();
+
+    let form_data = new FormData(form);
+    form_data.append("products_in_card", products_in_card_json)
+
+    div_shopping_cart_modal_window.classList.add("sending");
+    let response = await fetch("../php/sendmail.php", {
+        method: "POST",
+        body: form_data,
+    });
+    if (response.ok)
+    {
+        let result = await response.json(); 
+        alert(result.message);
+        return true;
+    }
+    else
+    {
+        div_shopping_cart_modal_window.classList.remove("sending");
+        alert("Ошибка, попробуйте еще раз");
+        return false;
+    }
+}
+
+function validation_form_data(inputs, form_data)
+{
+    /*for(const input of inputs)
     {
         if(input.className == "name")
         {
-            name = input.value;
+            form_data.name = input.value;
         }
         else if(input.className == "email")
         {
-            email = input.value;
+            form_data.email = input.value;
         }
         else if(input.className == "phone")
         {
-            phone = input.value;
+            form_data.phone = input.value;
         }
-        else if(input.className == "check_CDEK")
+        else if(input.id == "check_CDEK")
         {
             if (input.checked)
             {
-                status_delivery = STATUS_DELIVERY.CDEK;
+                form_data.status_delivery = STATUS_DELIVERY.CDEK;
             }
         }
         else if(input.className == "city")
         {
-            city = input.value;
+            form_data.city = input.value;
         }
         else if(input.className == "address")
         {
-            address = input.value;
+            form_data.address = input.value;
         }
-    }
+    }*/
 }

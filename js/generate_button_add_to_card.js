@@ -43,7 +43,6 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
             let button_minus = document.createElement("button");
             button_minus.className = "add-to-cart";
             button_minus.innerHTML = "<p><strong>-</strong><p>";
-            //s
             button_minus.onclick = () => {
                 product_obj = JSON.parse(localStorage.getItem(product));
                 product_obj.number -= 1;
@@ -74,7 +73,6 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
                     }
                 }
             }
-            //s
             div_buttons_num.append(button_minus);
         }
         else
@@ -87,7 +85,6 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
             {
                 button_price.setAttribute("id", "add-to-cart-" + product[2]);
             }
-            //s
             button_price.onclick = () => {
                 add_shopping_cart(product);
                 prev_div.removeChild(button_price);
@@ -101,7 +98,6 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
                     button_add_to_card(product, prev_div_out, ADD_TO_CARD_BUTTON.OUT);
                 }
             }
-            //s
             prev_div.append(button_price);
         }
     }

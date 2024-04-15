@@ -326,9 +326,33 @@ nav ul li:hover > ul {
 }
 
 .contatiner_form_payment {
+    position: relative;
+
     display: grid;
     justify-content: center;
 }
+.shopping_cart_modal_window::after {
+    content: "";
+
+    position: absolute;
+    
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 1) url("../img/loading.gif") center / 200px no-repeat;
+    border-radius: 10px;
+    
+    opacity: 0;
+    visibility: hidden;
+}
+.shopping_cart_modal_window.sending::after {
+    opacity: 0.9;
+    visibility: visible;
+}
+
 .contatiner_form_payment input {
     margin-top: 5px;
     background: transparent;
@@ -339,6 +363,8 @@ nav ul li:hover > ul {
     padding-right: 20px;
     color: #000;
     font-size: 26px;
+
+    outline: none;
 }
 .contatiner_form_payment input::placeholder {
     font-size: 20px;
