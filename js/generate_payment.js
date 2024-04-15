@@ -27,8 +27,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     let div_label_type_shipment = document.createElement("div");
     div_label_type_shipment.className = "label_type_shipment";
     div_label_type_shipment.innerHTML = "\
-        <label>Заберу самостоятельно<input type=\"checkbox\" id=\"check_myself\"></label>\
-        <label>Доставка CDEK<input type=\"checkbox\" id=\"check_CDEK\"></label>\
+        <label><p><strong>Заберу самостоятельно</strong></p><input type=\"checkbox\" id=\"check_myself\"></label>\
+        <label><p><strong>Доставка CDEK</strong></p><input type=\"checkbox\" id=\"check_CDEK\"></label>\
     ";
     form_contatiner.append(div_label_type_shipment);
 
@@ -48,8 +48,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
             }
 
             let div_cdek = document.createElement("div");
-            div_cdek.className = "cdeck_send";
-            div_cdek.setAttribute("id", "cdeck_send");
+            div_cdek.className = "cdek_send";
+            div_cdek.setAttribute("id", "cdek_send");
             div_cdek.innerHTML = "\
                 <input type=\"text\" class=\"city\" placeholder=\"Город\">\
                 <input type=\"text\" class=\"address\" placeholder=\"Адрес\">\
@@ -58,7 +58,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
             console.log(form_contatiner);
         } else {
             check_CDEK_status = 0;
-            form_contatiner.removeChild(document.getElementById("cdeck_send"));
+            form_contatiner.removeChild(document.getElementById("cdek_send"));
         }
     })
     check_myself.addEventListener("change", function () {
@@ -68,7 +68,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
             if (check_CDEK_status == 1)
             {
                 check_CDEK.checked = 0;
-                let div_cdek = document.getElementById("cdeck_send");
+                let div_cdek = document.getElementById("cdek_send");
                 if (div_cdek)
                 {
                     form_contatiner.removeChild(div_cdek);
@@ -84,7 +84,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     submit_button.setAttribute("type", "submit");
     form_contatiner.append(submit_button);
 
-    //доавить бекэнд
+    //добавить бекэнд
 }
 
 function remove_cdeck_send(div_shopping_cart_modal_window)

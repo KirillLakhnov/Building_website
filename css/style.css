@@ -327,4 +327,41 @@ nav ul li:hover > ul {
 
 .contatiner_form_payment {
     display: grid;
+    justify-content: center;
+}
+.contatiner_form_payment input {
+    margin-top: 5px;
+    background: transparent;
+    height: 40px;
+    border: 2px solid #585e5b;
+    border-radius: 1rem;
+    padding-left: 40px;
+    color: #000;
+    font-size: 26px;
+}
+.contatiner_form_payment input::placeholder {
+    font-size: 20px;
+    color: #3a564f;
+}
+.contatiner_form_payment .cdek_send {
+    display: grid;
+    justify-content: center;
+}
+.label_type_shipment {
+    margin-top: 5px;
+
+    border: 2px solid #585e5b;
+    border-radius: 1rem;
+}
+.label_type_shipment label{
+    margin: 0px;
+    display: flex;
+}
+.label_type_shipment p{
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.label_type_shipment input {
+    margin-left: 10px;
 }
