@@ -1,3 +1,5 @@
+const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1}
+
 export default function buy_products(total_price, div_shopping_cart_modal_window)
 {    
     while(div_shopping_cart_modal_window.hasChildNodes())
@@ -19,7 +21,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     form_contatiner.className = "contatiner_form_payment";
     form_contatiner.innerHTML = "\
         <input type=\"text\" class=\"name\" placeholder=\"ФИО\">\
-        <input type=\"email\" class=\"mail\" placeholder=\"E-mail\">\
+        <input type=\"email\" class=\"email\" placeholder=\"E-mail\">\
         <input type=\"text\" class=\"phone\" placeholder=\"Телефон\">\
     ";
     div_shopping_cart_modal_window.append(form_contatiner);
@@ -27,8 +29,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     let div_label_type_shipment = document.createElement("div");
     div_label_type_shipment.className = "label_type_shipment";
     div_label_type_shipment.innerHTML = "\
-        <label><p><strong>Заберу самостоятельно</strong></p><input type=\"checkbox\" id=\"check_myself\"></label>\
-        <label><p><strong>Доставка CDEK</strong></p><input type=\"checkbox\" id=\"check_CDEK\"></label>\
+        <label><p><strong>Заберу самостоятельно</strong></p><input type=\"checkbox\" class=\"check_myself\" id=\"check_myself\"></label>\
+        <label><p><strong>Доставка CDEK</strong></p><input type=\"checkbox\" class=\"check_CDEK\" id=\"check_CDEK\"></label>\
     ";
     form_contatiner.append(div_label_type_shipment);
 
@@ -88,6 +90,52 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
 
     form_contatiner.addEventListener("submit", function(event)
     {
-
+        event.preventDefault();
+        processing_form_data(form_contatiner);
+        localStorage.clear();
+        document.body.removeChild(document.getElementById("modal_win"));
     })
+}
+
+function processing_form_data(form)
+{
+    let inputs = form.querySelectorAll("input");
+
+    let name = "";
+    let email = "";
+    let phone = "";
+    let status_delivery = STATUS_DELIVERY.MYSELF;
+    let city = "";
+    let address = "";
+
+    for(const input of inputs)
+    {
+        if(input.className == "name")
+        {
+            name = input.value;
+        }
+        else if(input.className == "email")
+        {
+            email = input.value;
+        }
+        else if(input.className == "phone")
+        {
+            phone = input.value;
+        }
+        else if(input.className == "check_CDEK")
+        {
+            if (input.checked)
+            {
+                status_delivery = STATUS_DELIVERY.CDEK;
+            }
+        }
+        else if(input.className == "city")
+        {
+            city = input.value;
+        }
+        else if(input.className == "address")
+        {
+            address = input.value;
+        }
+    }
 }
