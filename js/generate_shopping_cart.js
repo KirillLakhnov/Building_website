@@ -14,7 +14,7 @@ export default function generate_shopping_cart()
     let button_close = document.createElement("button");
     button_close.className = "btn_close";
     button_close.innerHTML = "x";
-    button_close.onclick = () => document.body.removeChild(document.getElementById("modal_win"));
+    button_close.onclick = () => document.body.removeChild(div_shopping_cart_modal);
     div_shopping_cart_modal_window.append(button_close);
 
     let h2 = document.createElement("h2");
@@ -126,8 +126,27 @@ export default function generate_shopping_cart()
         button_price.className = "buy_btn";
         button_price.setAttribute("id", "buy_btn");
         button_price.innerHTML = "<h3>Купить</h3>";
+        button_price.onclick = () => buy_products(total_price, div_shopping_cart_modal_window)
         div_info_total_price.append(button_price);
     }
+}
+
+function buy_products(total_price, div_shopping_cart_modal_window)
+{    
+    while(div_shopping_cart_modal_window.hasChildNodes())
+    {
+        div_shopping_cart_modal_window.removeChild(div_shopping_cart_modal_window.firstChild);
+    }
+
+    let button_close = document.createElement("button");
+    button_close.className = "btn_close";
+    button_close.innerHTML = "x";
+    button_close.onclick = () => document.body.removeChild(document.getElementById("modal_win"));
+    div_shopping_cart_modal_window.append(button_close);
+
+    let h2 = document.createElement("h2");
+    h2.innerHTML = "Оформление заказа " + "<small><i class=\"fa-solid fa-money-check-dollar\"></i></small>";
+    div_shopping_cart_modal_window.append(h2);
 }
 
 function if_total_price_zero(products, fields_count, div_info_total_price, span_price)

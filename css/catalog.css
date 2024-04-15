@@ -110,6 +110,7 @@
     color: #000;
 }
 .price {
+    margin-top: 10px;
     font-weight: 700;
     font-size: 18px;
 }
