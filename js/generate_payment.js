@@ -38,7 +38,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     let check_CDEK_status = 0;
     let check_myself_status = 0;
 
-    check_CDEK.addEventListener("change", function () {
+    check_CDEK.addEventListener("change", function () 
+    {
         if (this.checked) {
             check_CDEK_status = 1;
 
@@ -55,13 +56,14 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
                 <input type=\"text\" class=\"address\" placeholder=\"Адрес\">\
             ";
             div_label_type_shipment.after(div_cdek);
-            console.log(form_contatiner);
+
         } else {
             check_CDEK_status = 0;
             form_contatiner.removeChild(document.getElementById("cdek_send"));
         }
     })
-    check_myself.addEventListener("change", function () {
+    check_myself.addEventListener("change", function () 
+    {
         if (this.checked) {
             check_myself_status = 1;
 
@@ -84,5 +86,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     submit_button.setAttribute("type", "submit");
     form_contatiner.append(submit_button);
 
-    //добавить бекэнд
+    form_contatiner.addEventListener("submit", function(event)
+    {
+
+    })
 }
