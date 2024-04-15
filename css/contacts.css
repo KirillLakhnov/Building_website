@@ -23,7 +23,7 @@
 
 
 .feedback_container {
-    height: 100vh;
+    height: 650px;
     display: flex;
     justify-content: center;
 }
