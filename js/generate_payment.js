@@ -86,8 +86,3 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
 
     //добавить бекэнд
 }
-
-function remove_cdeck_send(div_shopping_cart_modal_window)
-{
-    div_shopping_cart_modal_window.removeChild(document.getElementById("cdeck_send"));
-}

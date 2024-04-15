@@ -335,7 +335,8 @@ nav ul li:hover > ul {
     height: 40px;
     border: 2px solid #585e5b;
     border-radius: 1rem;
-    padding-left: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     color: #000;
     font-size: 26px;
 }
@@ -357,6 +358,9 @@ nav ul li:hover > ul {
     margin: 0px;
     display: flex;
 }
+.label_type_shipment label input{
+    cursor: pointer;
+}
 .label_type_shipment p{
     font-size: 15px;
     margin-top: 15px;
@@ -364,4 +368,11 @@ nav ul li:hover > ul {
 }
 .label_type_shipment input {
     margin-left: 10px;
+}
+.submit_button {
+    text-align: center;
+    cursor: pointer;
+}
+.submit_button:hover {
+    border-color: #000;
 }
