@@ -2,16 +2,20 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    require "PHPMailer-6.9.1/src/Exception.php";
-    require "PHPMailer-6.9.1/src/PHPMailer.php";
+    require "PHPMailer/src/Exception.php";
+    require "PHPMailer/src/PHPMailer.php";
 
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";
     $mail->setLanguage("ru", "PHPMailer-6.9.1/language/");
     $mail->IsHTML(true);
 
-    $mail->setFrom("arsenal_building@info.ru", "ООО Арсенал");
+    $mail->Username = "arsenal.building.info@gmail.com";
+    $mail->Password = "avrb puxj puow wghs";
+
+    $mail->setFrom("arsenal.building.info@gmail.com", "ООО Арсенал");
     $mail->addAddress("lakhnov.ka@phystech.edu");
+
     $mail->Subject = "Квитанция об оформлении заказа";
 
     $body = "<h1>Квитанция об офрмлении вашего заказа</h1>";
