@@ -1,12 +1,4 @@
 const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1};
-const FORM_DATA_ERROR = {
-    GOOD: 0, 
-    ERROR_NAME: 1,
-    ERROR_EMAIL: 2,
-    ERROR_PHONE: 3,
-    ERROR_CITY: 4,
-    ERROR_ADRESS: 5,
-};
 
 export default function buy_products(total_price, div_shopping_cart_modal_window)
 {    
@@ -99,16 +91,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     form_contatiner.addEventListener("submit", function(event)
     {
         event.preventDefault();
-        let result_processing_form_data = processing_form_data(form_contatiner, div_shopping_cart_modal_window);
-        if (result_processing_form_data === true)
-        {
-            //localStorage.clear();
-            document.body.removeChild(document.getElementById("modal_win"));
-        }
-        else
-        {
-            form_contatiner.reset();
-        }
+        processing_form_data(form_contatiner, div_shopping_cart_modal_window);
     })
 }
 
@@ -132,54 +115,25 @@ async function processing_form_data(form, div_shopping_cart_modal_window)
     form_data.append("products_in_card", products_in_card_json)
 
     div_shopping_cart_modal_window.classList.add("sending");
-    let response = await fetch("Building_website/php/sendmail.php", {
+    let response = await fetch("./php/sendmail.php", {
         method: "POST",
         body: form_data,
     });
     if (response.ok)
     {
-        let result = await response.json(); 
-        alert(result.message);
-        return true;
+        div_shopping_cart_modal_window.classList.remove("sending"); 
+        alert("Заказ отправлен на обработку");
+        document.body.removeChild(document.getElementById("modal_win"));
     }
     else
     {
         div_shopping_cart_modal_window.classList.remove("sending");
         alert("Ошибка, попробуйте еще раз");
-        return false;
+        form_contatiner.reset();
     }
 }
 
 function validation_form_data(inputs, form_data)
 {
-    /*for(const input of inputs)
-    {
-        if(input.className == "name")
-        {
-            form_data.name = input.value;
-        }
-        else if(input.className == "email")
-        {
-            form_data.email = input.value;
-        }
-        else if(input.className == "phone")
-        {
-            form_data.phone = input.value;
-        }
-        else if(input.id == "check_CDEK")
-        {
-            if (input.checked)
-            {
-                form_data.status_delivery = STATUS_DELIVERY.CDEK;
-            }
-        }
-        else if(input.className == "city")
-        {
-            form_data.city = input.value;
-        }
-        else if(input.className == "address")
-        {
-            form_data.address = input.value;
-        }
-    }*/
+
 }
