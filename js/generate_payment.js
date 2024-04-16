@@ -132,7 +132,7 @@ async function processing_form_data(form, div_shopping_cart_modal_window)
     form_data.append("products_in_card", products_in_card_json)
 
     div_shopping_cart_modal_window.classList.add("sending");
-    let response = await fetch("../../../php/sendmail.php", {
+    let response = await fetch("php/sendmail.php", {
         method: "POST",
         body: form_data,
     });
