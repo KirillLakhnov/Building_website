@@ -129,7 +129,7 @@ async function processing_form_data(form, div_shopping_cart_modal_window)
     {
         div_shopping_cart_modal_window.classList.remove("sending");
         alert("Ошибка, попробуйте еще раз");
-        form_contatiner.reset();
+        form.reset();
     }
 }
 
