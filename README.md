@@ -3,7 +3,7 @@
 
 ## **Текущий результат**
 Сайт можно посмотреть [здесь](http://arsenal-building.ru).
-![Screenshot](README_files/Building_website.png).
+![Screenshot](README_files/Building_website.png)
 
 ## **Как реализован сайт?**
 
