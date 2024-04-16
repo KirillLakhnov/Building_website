@@ -1,1 +1,3 @@
-[Building_website](http://arsenal-building.ru)
+#Проект - интернет-магазин.
+
+[Текущий результат](http://arsenal-building.ru)
