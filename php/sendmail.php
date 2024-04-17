@@ -41,7 +41,7 @@
         $len_products = count($products);
         $total_price = 0;
 
-        $body .= "<table>
+        $body .= "<table border=5px>
                     <tr>
                         <th>Наименование</th>
                         <th>Количество</th>
