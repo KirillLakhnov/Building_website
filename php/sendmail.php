@@ -49,12 +49,12 @@
         for($i = 0; $i < $len_products; $i++)
         {
             $body .= "<tr>
-                        <td>".$products[$i]["product"][2]."</td>
+                        <td>".$products[$i]["product"][1]."</td>
                         <td>".$products[$i]["number"]."</td>
-                        <td>".$products[$i]["product"][3]."</td>
+                        <td>".$products[$i]["product"][2]."</td>
                     </tr>";
                     
-            $total_price += $products[$i]["product"][3]*$products[$i]["number"];
+            $total_price += $products[$i]["product"][2]*$products[$i]["number"];
         }
         $body .= "</table>";
         
@@ -65,8 +65,7 @@
         $mail->Body = $body;
         
         $mail->send();
-        echo 'Message has been sent';
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        
     }
 ?>

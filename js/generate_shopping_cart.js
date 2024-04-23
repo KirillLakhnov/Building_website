@@ -33,17 +33,17 @@ export default function generate_shopping_cart()
     {
         let li_shopping_cart = document.createElement("li");
         li_shopping_cart.className = "li_shopping_cart";
-        li_shopping_cart.setAttribute("id", products[i].product[2]);
+        li_shopping_cart.setAttribute("id", products[i].product[1]);
         ul_shopping_cart.append(li_shopping_cart);
 
         let div_image = document.createElement("div");
         div_image.className = "image_shopping_cart";
-        div_image.innerHTML = "<img src=\"../../" + products[i].product[5] + "\" alt=\"\">";
+        div_image.innerHTML = "<img src=\"../../" + products[i].product[4] + "\" alt=\"\">";
         li_shopping_cart.append(div_image);
 
         let div_info = document.createElement("div");
         div_info.className = "info_shopping_cart";
-        div_info.innerHTML = "<h3>" + products[i].product[2] + "</h3>";
+        div_info.innerHTML = "<h3>" + products[i].product[1] + "</h3>";
         li_shopping_cart.append(div_info);
 
         let div_quantity_change = document.createElement("div");
@@ -57,7 +57,7 @@ export default function generate_shopping_cart()
             number_product.innerHTML = products[i].number + "шт";
             span_price.innerHTML = total_price_count(products, fields_count) + "<small> ₽</small>";
 
-            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[2]);
+            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[1]);
             for (let i = 0; i < number_product_elements.length; i++)
             {
                 number_product_elements[i].innerHTML = products[i].number + "шт";
@@ -78,7 +78,7 @@ export default function generate_shopping_cart()
             number_product.innerHTML = products[i].number  + "шт";
             span_price.innerHTML = total_price_count(products, fields_count) + "<small> ₽</small>";
 
-            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[2]);
+            let number_product_elements = document.getElementsByClassName("number_product_" + products[i].product[1]);
             for (let i = 0; i < number_product_elements.length; i++)
             {
                 number_product_elements[i].innerHTML = products[i].number + "шт";
@@ -86,11 +86,11 @@ export default function generate_shopping_cart()
 
             if (products[i].number <= 0)
             {
-                ul_shopping_cart.removeChild(document.getElementById(products[i].product[2]));
-                localStorage.removeItem(products[i].product);
+                ul_shopping_cart.removeChild(document.getElementById(products[i].product[1]));
+                localStorage.removeItem(JSON.stringify(products[i].product));
 
-                let info_price_add_to_card_out = document.getElementById("info-price-" + products[i].product[2]);
-                let button_add_to_card_out = document.getElementById("buttons_num_" + products[i].product[2]);
+                let info_price_add_to_card_out = document.getElementById("info-price-" + products[i].product[1]);
+                let button_add_to_card_out = document.getElementById("buttons_num_" + products[i].product[1]);
                 if (button_add_to_card_out != null)
                 {
                     info_price_add_to_card_out.removeChild(button_add_to_card_out);
@@ -164,7 +164,7 @@ function total_price_count(products, fields_count)
 
     for (let i = 0; i < fields_count; i++)
     {
-        total_price += (+products[i].product[3])*(+products[i].number);
+        total_price += (+products[i].product[2])*(+products[i].number);
     }
     return total_price;
 }
@@ -173,5 +173,5 @@ function product_quantity_measurement(product_obj, change_number)
 {
     product_obj.number += change_number;
     
-    localStorage.setItem(product_obj.product, JSON.stringify(product_obj));
+    localStorage.setItem(JSON.stringify(product_obj.product), JSON.stringify(product_obj));
 }
