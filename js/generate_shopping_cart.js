@@ -1,7 +1,7 @@
 import button_add_to_card from "./generate_button_add_to_card.js";
 import buy_products from "./generate_payment.js";
 
-export default function generate_shopping_cart()
+export default function generate_shopping_cart(location_info)
 {
     let div_shopping_cart_modal = document.createElement("div");
     div_shopping_cart_modal.className = "shopping_cart_modal";
@@ -127,7 +127,7 @@ export default function generate_shopping_cart()
         button_price.className = "buy_btn";
         button_price.setAttribute("id", "buy_btn");
         button_price.innerHTML = "<h3>Купить</h3>";
-        button_price.onclick = () => buy_products(total_price, div_shopping_cart_modal_window)
+        button_price.onclick = () => buy_products(total_price, div_shopping_cart_modal_window, location_info);
         div_info_total_price.append(button_price);
     }
 }

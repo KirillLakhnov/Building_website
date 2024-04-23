@@ -1,4 +1,3 @@
-import "./js_libs/xlsx.min.js";
 import button_add_to_card from "./generate_button_add_to_card.js";
 
 /**

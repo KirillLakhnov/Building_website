@@ -20,7 +20,7 @@
 
             let button = document.createElement("button");
             button.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
-            button.onclick = generate_shopping_cart;
+            button.onclick = () => generate_shopping_cart("../../");
             button_shopping_cart.append(button);
         </script>
     </head>
@@ -49,7 +49,7 @@
                     </li>
                     <li><a href="../questions.html">Вопросы</a></li>
                     <li><a href="../contacts.html">Контакты</a></li>
-                    <li id="button_shopping_cart"></button></li>
+                    <li id="button_shopping_cart"></li>
                 </ul>
             </nav>
         </header>

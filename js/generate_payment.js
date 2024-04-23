@@ -1,6 +1,6 @@
 const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1};
 
-export default function buy_products(total_price, div_shopping_cart_modal_window)
+export default function buy_products(total_price, div_shopping_cart_modal_window, location_info)
 {    
     while(div_shopping_cart_modal_window.hasChildNodes())
     {
@@ -91,11 +91,11 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     form_contatiner.addEventListener("submit", function(event)
     {
         event.preventDefault();
-        processing_form_data(form_contatiner, div_shopping_cart_modal_window);
+        processing_form_data(form_contatiner, div_shopping_cart_modal_window, location_info);
     })
 }
 
-async function processing_form_data(form, div_shopping_cart_modal_window)
+async function processing_form_data(form, div_shopping_cart_modal_window, location_info)
 {
     let products_in_card = [];
     const localStorage_fields_count = localStorage.length;
@@ -115,7 +115,7 @@ async function processing_form_data(form, div_shopping_cart_modal_window)
     form_data.append("products_in_card", products_in_card_json)
 
     div_shopping_cart_modal_window.classList.add("sending");
-    let response = await fetch("./php/sendmail.php", {
+    let response = await fetch(location_info + "php/sendmail.php", {
         method: "POST",
         body: form_data,
     });
