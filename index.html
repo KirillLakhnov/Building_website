@@ -5,6 +5,8 @@
         <title>ООО Арсенал</title>
 
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/footer.css">
 
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
 
@@ -16,6 +18,9 @@
             button.onclick = () => generate_shopping_cart("./");
             button_shopping_cart.append(button);
         </script>
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </head>
 
 
@@ -131,6 +136,23 @@
 
         </section>
 
+        <footer class="footer">
+            <ul class="social-icon">
+                <li class="social-icon_item"><a class="social-icon_link" href="https://vk.com/arsenallm">
+                    <ion-icon name="logo-vk"></ion-icon>
+                </a></li>
+                <li class="social-icon_item"><a class="social-icon_link" href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a></li>
+            </ul>
+            <ul class="menu">
+                <li class="menu_item"><a class="menu_link" href="index.html">Главная</a></li>
+                <li class="menu_item"><a class="menu_link" href="#">Каталог</a></li>
+                <li class="menu_item"><a class="menu_link" href="html/questions.html">Вопросы</a></li>
+                <li class="menu_item"><a class="menu_link" href="html/contacts.html">Контакты</a></li>
+            </ul>
+            <p>ООО Арсенал</p>
+        </footer>
     </body>
     
 </html>
