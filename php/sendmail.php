@@ -36,7 +36,7 @@
             Меленки, ул. Коминтерна д. 109А <strong>(Самовывоз)</strong></p>";
         }
 
-        $products = json_decode($_POST["products_in_card"], true);
+        $products = json_decode($_POST["products_in_card"], true); 
         $len_products = count($products);
         $total_price = 0;
 

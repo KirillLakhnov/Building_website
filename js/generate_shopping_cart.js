@@ -87,7 +87,7 @@ export default function generate_shopping_cart(location_info)
             if (products[i].number <= 0)
             {
                 ul_shopping_cart.removeChild(document.getElementById(products[i].product[1]));
-                localStorage.removeItem(JSON.stringify(products[i].product));
+                localStorage.removeItem(JSON.stringify(products[i].product[1]));
 
                 let info_price_add_to_card_out = document.getElementById("info-price-" + products[i].product[1]);
                 let button_add_to_card_out = document.getElementById("buttons_num_" + products[i].product[1]);
@@ -173,5 +173,5 @@ function product_quantity_measurement(product_obj, change_number)
 {
     product_obj.number += change_number;
     
-    localStorage.setItem(JSON.stringify(product_obj.product), JSON.stringify(product_obj));
+    localStorage.setItem(JSON.stringify(product_obj.product[1]), JSON.stringify(product_obj));
 }

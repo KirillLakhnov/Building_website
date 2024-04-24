@@ -11,7 +11,7 @@
 	}
 	if (!mysqli_set_charset($connection, "utf8")) 
 	{
-        echo "Ошибка при загрузке набора символов utf8: %s\n", mysqli_error($connection);
+        die("Ошибка при загрузке набора символов utf8: ".mysqli_error($connection));
     }
 	
     $query = "SELECT * FROM ".$_GET["table_name"];

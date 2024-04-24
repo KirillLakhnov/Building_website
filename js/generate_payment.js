@@ -1,3 +1,5 @@
+import button_add_to_card from "./generate_button_add_to_card.js";
+
 const STATUS_DELIVERY = {MYSELF: 0, CDEK: 1};
 
 export default function buy_products(total_price, div_shopping_cart_modal_window, location_info)
@@ -66,7 +68,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     })
     check_myself.addEventListener("change", function () 
     {
-        if (this.checked) {
+        if (this.checked) 
+        {
             check_myself_status = 1;
 
             if (check_CDEK_status == 1)
@@ -78,7 +81,9 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
                     form_contatiner.removeChild(div_cdek);
                 }
             }
-        } else {
+        } 
+        else 
+        {
             check_myself_status = 0;
         }
     })
@@ -92,21 +97,27 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     {
         event.preventDefault();
         processing_form_data(form_contatiner, div_shopping_cart_modal_window, location_info);
+        transfer_data_to_seller(form_contatiner, location_info);
+
+        while (localStorage.length != 0)
+        {
+            const key = localStorage.key(0);
+            const product_obj = JSON.parse(localStorage.getItem(key));
+            localStorage.removeItem(key);
+                       
+            let prev_button_div = document.getElementById("info-price-" + product_obj.product[1]);  
+            if (prev_button_div != null)
+            {
+                prev_button_div.removeChild(document.getElementById("buttons_num_" + product_obj.product[1]));
+                button_add_to_card(product_obj.product, prev_button_div, 0);
+            }
+        }
     })
 }
 
 async function processing_form_data(form, div_shopping_cart_modal_window, location_info)
 {
-    let products_in_card = [];
-    const localStorage_fields_count = localStorage.length;
-
-    for (let i = 0; i < localStorage_fields_count; i++)
-    {
-        const key = localStorage.key(i);
-        const product_obj = JSON.parse(localStorage.getItem(key));
-        
-        products_in_card.push(product_obj);
-    }
+    let products_in_card = local_storage_processing(localStorage.length);
     let products_in_card_json = JSON.stringify(products_in_card);
 
     //validation_form_data();
@@ -136,4 +147,35 @@ async function processing_form_data(form, div_shopping_cart_modal_window, locati
 function validation_form_data(inputs, form_data)
 {
 
+}
+
+async function transfer_data_to_seller(form, location_info)
+{
+    let products = local_storage_processing(localStorage.length);
+    let body = new FormData(form);
+    body.append("products_in_card", JSON.stringify(products))
+
+    let response = await fetch(location_info + "php/transfer_data_to_seller.php", {
+        method: "POST",
+        body: body,
+    });
+    if (!(response.ok))
+    {
+        alert("Ошибка: " + response.status);
+    }
+}
+
+function local_storage_processing(fields_count)
+{
+    let products = [];
+
+    for (let i = 0; i < fields_count; i++)
+    {
+        const key = localStorage.key(i);
+        const product_obj = JSON.parse(localStorage.getItem(key));
+        
+        products.push(product_obj);
+    }
+
+    return products;
 }

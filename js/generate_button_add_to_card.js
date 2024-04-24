@@ -4,7 +4,7 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
 {
     if (+product[3] != 0)
     {
-        let product_obj_json = localStorage.getItem(JSON.stringify(product));
+        let product_obj_json = localStorage.getItem(JSON.stringify(product[1]));
 
         if (product_obj_json != null)
         {
@@ -23,9 +23,9 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
             button_plus.innerHTML = "<p><strong>+</strong></p>";
 
             button_plus.onclick = () => {
-                product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product)));
+                product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product[1])));
                 product_obj.number += 1;
-                localStorage.setItem(JSON.stringify(product_obj.product), JSON.stringify(product_obj));
+                localStorage.setItem(JSON.stringify(product_obj.product[1]), JSON.stringify(product_obj));
 
                 let number_product_elements = document.getElementsByClassName("number_product_" + product[1]);
                 for (let i = 0; i < number_product_elements.length; i++)
@@ -44,13 +44,13 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
             button_minus.className = "add-to-cart";
             button_minus.innerHTML = "<p><strong>-</strong><p>";
             button_minus.onclick = () => {
-                product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product)));
+                product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product[1])));
                 product_obj.number -= 1;
 
                 if (product_obj.number <= 0)
                 {
                     prev_div.removeChild(div_buttons_num);
-                    localStorage.removeItem(JSON.stringify(product_obj.product));
+                    localStorage.removeItem(JSON.stringify(product_obj.product[1]));
 
                     button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON_POSITION);
 
@@ -64,7 +64,7 @@ export default function button_add_to_card(product, prev_div, ADD_TO_CARD_BUTTON
                 }
                 else
                 {
-                    localStorage.setItem(JSON.stringify(product_obj.product), JSON.stringify(product_obj));
+                    localStorage.setItem(JSON.stringify(product_obj.product[1]), JSON.stringify(product_obj));
 
                     let number_product_elements = document.getElementsByClassName("number_product_" + product[1]);
                     for (let i = 0; i < number_product_elements.length; i++)
@@ -118,19 +118,19 @@ function add_shopping_cart(product)
 {
     console.log();
     
-    if (localStorage.getItem(JSON.stringify(product)) == null)
+    if (localStorage.getItem(JSON.stringify(product[1])) == null)
     {
         let product_obj = {
             product: product,
             number: 1, 
         }
 
-        localStorage.setItem(JSON.stringify(product), JSON.stringify(product_obj));
+        localStorage.setItem(JSON.stringify(product[1]), JSON.stringify(product_obj));
     }
     else
     {
-        let product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product)));
+        let product_obj = JSON.parse(localStorage.getItem(JSON.stringify(product[1])));
         product_obj.number += 1;
-        localStorage.setItem(JSON.stringify(product), JSON.stringify(product_obj));
+        localStorage.setItem(JSON.stringify(product[1]), JSON.stringify(product_obj));
     }
 }
