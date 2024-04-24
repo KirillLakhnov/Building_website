@@ -33,9 +33,15 @@
 	    }
     }
 
+    $order = "";
+    for($i = 0; $i < $len_products; $i++)
+    {
+        $order .= "Наименование: ".$products[$i]["product"][1]."\nКоличество: ".$products[$i]["number"]."\n\n";
+    }
+
     if(trim(!empty($_POST["city"])))
     {
-        $query = "INSERT INTO `Заказы` (`ФИО`, `Email`, `Телефон`, `Доставка`, `Город`, `Адрес`, `Заказ`) VALUES (\"".$_POST["name"]."\", \"".$_POST["email"]."\", \"".$_POST["phone"]."\",\"Доставка магазина\", \"".$_POST["city"]."\", \"".$_POST["address"]."\", '".$_POST["products_in_card"]."');";
+        $query = "INSERT INTO `Заказы` (`ФИО`, `Email`, `Телефон`, `Доставка`, `Город`, `Адрес`, `Заказ`) VALUES (\"".$_POST["name"]."\", \"".$_POST["email"]."\", \"".$_POST["phone"]."\",\"Доставка магазина\", \"".$_POST["city"]."\", \"".$_POST["address"]."\", '".$order."');";
         $result = mysqli_query($connection, $query);
         if (!$result) 
         {
@@ -44,7 +50,7 @@
     }
     else
     {
-        $query = "INSERT INTO `Заказы` (`ФИО`, `Email`, `Телефон`, `Доставка`, `Город`, `Адрес`, `Заказ`) VALUES (\"".$_POST["name"]."\", \"".$_POST["email"]."\", \"".$_POST["phone"]."\",\"Самостоятельно\", NULL, NULL, '".$_POST["products_in_card"]."');";
+        $query = "INSERT INTO `Заказы` (`ФИО`, `Email`, `Телефон`, `Доставка`, `Город`, `Адрес`, `Заказ`) VALUES (\"".$_POST["name"]."\", \"".$_POST["email"]."\", \"".$_POST["phone"]."\",\"Самостоятельно\", NULL, NULL, '".$order."');";
         $result = mysqli_query($connection, $query);
         if (!$result) 
         {
