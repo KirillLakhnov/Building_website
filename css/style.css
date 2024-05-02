@@ -10,7 +10,7 @@
 }
 
 body {
-    background: #d7d7d7;
+    background: rgb(235, 235, 235);
 }
 
 .about-company {
@@ -44,7 +44,7 @@ body {
     padding: 0rem 5%;
 }
 .about-company .testimonial-container .box {
-    background: #517d71;
+    background: #fff;
     border: .14rem solid #585e5b;
 
     margin: 1.2rem 0rem;
@@ -54,6 +54,7 @@ body {
 }
 .about-company .testimonial-container  .box:hover {
     border: .14rem solid #000;
+    box-shadow: 0 0px 20px #000;
     transform: translateY(-.8rem);
 }
 .about-company .testimonial-container  .box .fa-solid {
@@ -93,7 +94,7 @@ body {
 
     color: #585e5b;
     border: .14rem solid #585e5b;
-    background: #70a495;
+    background: rgb(235, 235, 235);
 
     cursor: pointer;
     transition: .3s ease; 
@@ -121,7 +122,7 @@ body {
     background: rgba(0, 0, 0, 0.3);
 }
 .shopping_cart_modal_window {
-    background-color: #70a495;
+    background-color: rgb(235, 235, 235);
     position: relative;
     width: 550px;
     border-radius: 10px;
@@ -141,10 +142,8 @@ body {
 .li_shopping_cart {
     height: 150px;
 
-    background: #517d71;
+    background: #fff;
     border: .14rem solid #585e5b;
-
-    cursor: pointer;
 
     margin: 1.2rem 1rem;
     padding: 1rem 3rem;
@@ -152,6 +151,9 @@ body {
     transition: 0.5s;
 
     position: relative;
+}
+.li_shopping_cart:hover {
+    box-shadow: 0 0px 20px #000;
 }
 .image_shopping_cart {
     width: 5rem;
@@ -199,8 +201,8 @@ body {
     transition: .3s ease; 
     
     border: .14rem solid #585e5b;
-    background: #70a495;
-    color: #3a564f;
+    background: rgb(235, 235, 235);
+    color: #585e5b;
 
     border-radius: 0.5rem;
 }
@@ -239,8 +241,8 @@ body {
     font-size: 13px;
     
     border: .14rem solid #585e5b;
-    background: #70a495;
-    color: #3a564f;
+    background: rgb(235, 235, 235);
+    color: #585e5b;
 
     border-radius: 0.5rem;
 }
@@ -296,7 +298,7 @@ body {
 }
 .contatiner_form_payment input::placeholder {
     font-size: 20px;
-    color: #3a564f;
+    color: #585e5b;
 }
 .contatiner_form_payment .cdek_send {
     display: grid;

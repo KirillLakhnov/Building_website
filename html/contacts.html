@@ -1,5 +1,4 @@
 <html>
-
     <head>
         <meta charset="utf-8">
         <title>Контакты</title>
@@ -10,7 +9,7 @@
         <link rel="stylesheet" href="../css/footer.css">
 
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
-
+        
         <script type="module">
             import generate_shopping_cart from "../js/generate_shopping_cart.js";
 
@@ -19,6 +18,15 @@
             button.onclick = () => generate_shopping_cart("../");
             button_shopping_cart.append(button);
         </script>
+
+        <script type="module">
+            import feedback_form_handler from "../js/feedback.js";
+
+            feedback_form_handler("../");
+        </script>
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> 
     </head>
 
     <body>
@@ -43,7 +51,6 @@
                             <li><a href="#">Металлопрокат</a></li>
                         </ul>
                     </li>
-                    <li><a href="../html/questions.html">Вопросы</a></li>
                     <li><a href="../html/contacts.html">Контакты</a></li>
                     <li id="button_shopping_cart"></li>
                 </ul>
@@ -69,21 +76,37 @@
         </div>
 
         <div class="feedback_container">
-            <div class="feedback_form">
+            <form class="feedback_form" id="feedback_form">
                 <h1>Клиентская поддержка</h1>
                 <div class="data_block">
-                    <input type="text" class="name" placeholder="Имя">
-                    <input type="email" class="mail" placeholder="E-mail">
-                    <input type="text" class="phone" placeholder="Телефон">
+                    <input type="text" class="name" name="name" placeholder="Имя">
+                    <input type="email" name="email" placeholder="E-mail">
+                    <input type="text" name="phone" placeholder="Телефон">
                 </div>
                 <div class="text_area">
-                    <textarea rows="5" placeholder="Напишите свое сообщение"></textarea>
+                    <textarea name="feedback" rows="5" placeholder="Напишите свое сообщение"></textarea>
                 </div>
                 <div class="send">
-                    <button>Отправить</button>
+                    <input class="submit_button_feedback" type="submit">
                 </div>
-            </div>
+            </form>
         </div>
-    </body>
 
+        <footer class="footer">
+            <ul class="social-icon">
+                <li class="social-icon_item"><a class="social-icon_link" href="https://vk.com/arsenallm">
+                    <ion-icon name="logo-vk"></ion-icon>
+                </a></li>
+                <li class="social-icon_item"><a class="social-icon_link" href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a></li>
+            </ul>
+            <ul class="menu">
+                <li class="menu_item"><a class="menu_link" href="index.html">Главная</a></li>
+                <li class="menu_item"><a class="menu_link" href="#">Каталог</a></li>
+                <li class="menu_item"><a class="menu_link" href="html/contacts.html">Контакты</a></li>
+            </ul>
+            <p>ООО Арсенал</p>
+        </footer>
+    </body>
 </html>

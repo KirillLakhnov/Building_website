@@ -12,10 +12,8 @@
 }
 
 .product {
-    background: #517d71;
+    background: #fff;
     border: .14rem solid #585e5b;
-
-    cursor: pointer;
 
     width: 22rem;
     height: 29rem;
@@ -23,17 +21,20 @@
     margin: 1rem 1rem;
     padding: 1rem 1rem;
 
-    border-radius: 1.5rem;
     transition: 0.5s;
 }
 .product:hover {
     border: .14rem solid #000;
+    box-shadow: 0 0px 20px #000;
 }
 .image {
     width: 15rem;
     height: 15rem;
+
     margin-left: auto;
     margin-right: auto;
+    
+    cursor: pointer;
 }
 .image img {
     width: 100%;
@@ -76,8 +77,8 @@
     transition: .3s ease; 
     
     border: .14rem solid #585e5b;
-    background: #70a495;
-    color: #3a564f;
+    background: rgb(235, 235, 235);
+    color: #585e5b;
 
     border-radius: 0.5rem;
 }
@@ -88,7 +89,6 @@
 .product_missing {
     font-size: 15px;
 
-    border: none;
     width: 110px;
     height: 40px;
     display: flex;
@@ -100,8 +100,8 @@
     transition: .3s ease; 
     
     border: .14rem solid #585e5b;
-    background: #70a495;
-    color: #3a564f;
+    background: rgb(235, 235, 235);
+    color: #585e5b;
 
     border-radius: 0.5rem;
 }
@@ -131,7 +131,7 @@
     background: rgba(0, 0, 0, 0.3);
 }
 .modal_window {
-    background-color: #70a495;
+    background-color: rgb(235, 235, 235);
     position: relative;
     width: 800px;
     border-radius: 10px;

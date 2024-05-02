@@ -7,7 +7,7 @@
     flex-wrap: center;
     justify-content: center;
 
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
 }
 .contacts .content {
     flex: 1 1 10rem;
@@ -26,11 +26,14 @@
     height: 650px;
     display: flex;
     justify-content: center;
+
+    margin-bottom: 70px;
 }
 .feedback_container .feedback_form {
     width: 768px;
     padding: 6rem 3rem;
-    background: #628c7f;
+    background: rgb(215, 215, 215);
+    box-shadow: 0 0px 10px #000;
     border-radius: 1.5rem;
 }
 .feedback_container .feedback_form h1 {
@@ -51,10 +54,12 @@
     padding-left: 24px;
     color: #000;
     font-size: 26px;
+
+    outline: none;
 }
 .feedback_container .feedback_form input::placeholder {
     font-size: 20px;
-    color: #3a564f;
+    color: #585e5b;
 }
 .feedback_container .feedback_form .data_block .name {
     width: 100%;
@@ -76,14 +81,14 @@
 }
 .feedback_container .feedback_form .text_area textarea::placeholder {
     font-size: 20px;
-    color: #3a564f;
+    color: #585e5b;
 }
 .feedback_container .feedback_form .send {
     width: 100%;
     margin-top: 10px;
     text-align: right;
 }
-.feedback_container .feedback_form .send button{
+.feedback_container .feedback_form .send .submit_button_feedback {
     border: none;
     outline: none;
     background: none;
@@ -94,10 +99,12 @@
     cursor: pointer;
     transition: .3s ease; 
 
-    background: #70a495;
-    color: #3a564f;
+    margin-bottom: 2px;
+
+    background: rgb(235, 235, 235);
+    color: #585e5b;
 }
-.feedback_container .feedback_form .send button:hover {
+.feedback_container .feedback_form .send .submit_button_feedback:hover {
     border: .14rem solid #000;
     color: #000;
 }

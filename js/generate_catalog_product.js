@@ -19,15 +19,15 @@ export default async function generate_product_page(name)
         {
             const col = i;
                 
-            let button_product = document.createElement("button");
+            let button_product = document.createElement("div");
             button_product.className = "product";
             button_product.setAttribute("id", "button_product" + products[i][1]);
-            button_product.onclick = () => product_card(products[col]);
             container.append(button_product);
     
             let div_image = document.createElement("div");
             div_image.className = "image";
             div_image.innerHTML = "<img src=\"../../" + products[i][4] + "\" alt=\"\">";
+            div_image.onclick = () => product_card(products[col]);
             button_product.append(div_image);
     
             let div_info = document.createElement("div");
