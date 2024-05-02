@@ -14,7 +14,8 @@
     box-shadow: 0px 0px 50px #000;
   }
   .social-icon,
-  .menu {
+  .menu,
+  .reviews {
     position: relative;
     display: flex;
     justify-content: center;
@@ -23,7 +24,8 @@
     flex-wrap: wrap;
   }
   .social-icon_item,
-  .menu_item {
+  .menu_item,
+  .reviews_item {
     list-style: none;
   }
   .social-icon_link {
@@ -36,7 +38,8 @@
   .social-icon_link:hover {
     transform: translateY(-10px);
   }
-  .menu_link {
+  .menu_link,
+  .reviews_link {
     font-size: 1.2rem;
     color: #fff;
     margin: 0 10px;
@@ -46,7 +49,12 @@
     opacity: 0.75;
     font-weight: 300;
   }
-  .menu_link:hover {
+  .reviews_link {
+    cursor: pointer;
+    transition: .3s ease; 
+  }
+  .menu_link:hover,
+  .reviews_link:hover {
     opacity: 1;
   }
   .footer p {
