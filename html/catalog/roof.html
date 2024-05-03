@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="../../css/catalog.css">
         <link rel="stylesheet" href="../../css/header.css">
         <link rel="stylesheet" href="../../css/footer.css">
+        <link rel="stylesheet" href="../../css/modal_window.css">
+        <link rel="stylesheet" href="../../css/reviews_form.css">
 
         <script src="https://kit.fontawesome.com/ed646ce458.js" crossorigin="anonymous"></script>
 
@@ -24,6 +26,12 @@
             button.innerHTML = "<i class=\"fa-solid fa-cart-shopping\"></i>";
             button.onclick = () => generate_shopping_cart("../../");
             button_shopping_cart.append(button);
+        </script>
+
+        <script type="module">
+            import adding_reviews from "../../js/generate_adding_reviews.js";
+            
+            adding_reviews("../../");
         </script>
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -76,7 +84,7 @@
                 <li class="menu_item"><a class="menu_link" href="../contacts.html">Контакты</a></li>
             </ul>
             <ul class="reviews">
-                <li class="reviews_item"><div class="reviews_link">Добавить отзыв</div></li>
+                <li class="reviews_item" id="reviews_item"></li>
             </ul>
             <p>ООО Арсенал</p>
         </footer>

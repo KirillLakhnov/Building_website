@@ -23,7 +23,7 @@ async function processing_form_data(form, location_info)
     {
         //div_shopping_cart_modal_window.classList.remove("sending"); 
         alert("Сообщение отправлен на обработку");
-        document.body.removeChild(document.getElementById("modal_win"));
+        //document.body.removeChild(document.getElementById("modal_win"));
     }
     else
     {
