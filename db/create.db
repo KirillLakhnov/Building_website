@@ -1,5 +1,22 @@
 CREATE DATABASE arsenal_db DEFAULT CHARSET=utf8;;
 
+CREATE TABLE `Вопросы` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ФИО` text,
+  `Email` text,
+  `Телефон` text,
+  `Вопрос` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Отзывы` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ФИО` text,
+  `Отзыв` text,
+  `Фотография` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `Заказы` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ФИО` text,

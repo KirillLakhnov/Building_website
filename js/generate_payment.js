@@ -32,7 +32,7 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     div_label_type_shipment.className = "label_type_shipment";
     div_label_type_shipment.innerHTML = "\
         <label><input type=\"checkbox\" class=\"check\" id=\"check_myself\"><p><strong>Заберу самостоятельно</strong></p></label>\
-        <label><input type=\"checkbox\" class=\"check\" id=\"check_CDEK\"><p><strong>Доставка CDEK</strong></p></label>\
+        <label><input type=\"checkbox\" class=\"check\" id=\"check_CDEK\"><p><strong>Доставка до дома</strong></p></label>\
     ";
     form_contatiner.append(div_label_type_shipment);
 
