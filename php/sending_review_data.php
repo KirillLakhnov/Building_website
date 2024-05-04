@@ -13,8 +13,9 @@
     {
         die("Ошибка при загрузке набора символов utf8: ".mysqli_error($connection));
     }
-
-    $query = "INSERT INTO `Отзывы` (`ФИО`, `Отзыв`, `Фотография`) VALUES('".$_POST["name"]."','".$_POST["review"]."', NULL);";
+    
+    $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+    $query = "INSERT INTO `Отзывы` (`ФИО`, `Отзыв`, `Фотография`) VALUES('".$_POST["name"]."','".$_POST["review"]."','{$image}');";
     $result = mysqli_query($connection, $query);
     if (!$result) 
     {

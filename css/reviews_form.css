@@ -30,13 +30,15 @@
     font-size: 24px;
     color: #000000
 }
-.reviews_form .send_review {
+.reviews_form .final_data_review {
+    display: flex;
+}
+.reviews_form .final_data_review .send_review {
     width: 100%;
     margin-top: 10px;
     text-align: right;
 }
-.reviews_form .send_review .submit_button_review {
-    border: none;
+.reviews_form .final_data_review .send_review .submit_button_review {
     outline: none;
     background: none;
     border: .14rem solid #585e5b;
@@ -51,7 +53,41 @@
     background: rgb(235, 235, 235);
     color: #585e5b;
 }
-.reviews_form .send_review .submit_button_review:hover {
+.reviews_form .final_data_review .send_review .submit_button_review:hover {
     border: .14rem solid #000;
     color: #000;
+}
+.reviews_form .final_data_review .file_dowload {
+    position: relative;
+    
+    width: 100%;
+    margin-top: 10px;
+    text-align: left;
+}
+.reviews_form .final_data_review .file_dowload .file_review_button {
+    width: 215px;
+
+    outline: none;
+    background: none;
+    border: .14rem solid #585e5b;
+    padding: 0.7rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .3s ease; 
+
+    margin-bottom: 2px;
+
+    background: rgb(235, 235, 235);
+    color: #585e5b;
+}
+.reviews_form .final_data_review .file_dowload .file_review_button:hover {
+    border: .14rem solid #000;
+    color: #000;
+}
+.reviews_form .final_data_review .file_dowload .file_review_button_img {
+    width: 225px;
+}
+.reviews_form .final_data_review .file_dowload .file_review_button_img img{
+    height: 18px;
 }

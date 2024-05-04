@@ -20,17 +20,17 @@ async function generate_reviews_page ()
             let div_box = document.createElement('div');
             div_box.className = "box";
             div_box.innerHTML = "<i class=\"fa-solid fa-quote-left\"></i>\
-                                <p>" + reviews[i][2] + "</p>";
+                                 <p>" + reviews[i][2] + "</p>";
             div_testimonial_container.append(div_box);
 
             let div_person = document.createElement('div');
             div_person.className = "person";
             div_person.innerHTML = "<div class=\"author\">" + reviews[i][1] + "</div>";
             div_box.append(div_person);
-
+            
             let div_img = document.createElement('div');
             div_img.className = "img";
-            div_img.innerHTML = "<img src=\"" + reviews[i][3] + "\" alt=\"\">";
+            div_img.innerHTML = "<img src=\"data:image/jpg;base64," + reviews[i][3] + "\"/>";
             div_person.prepend(div_img);
         }
     }

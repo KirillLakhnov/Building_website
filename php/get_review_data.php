@@ -22,8 +22,11 @@
 	}
     
     $reviews[] = array();
+    
     while($row = mysqli_fetch_array($result)) 
     {
+        $row[3] = base64_encode($row[3]);
+        $row["Фотография"] = base64_encode($row["Фотография"]);
         $reviews[] = $row;
     }
     
