@@ -96,20 +96,23 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     form_contatiner.addEventListener("submit", function(event)
     {
         event.preventDefault();
-        processing_form_data(form_contatiner, div_shopping_cart_modal_window, location_info);
-        transfer_data_to_seller(form_contatiner, location_info);
-
-        while (localStorage.length != 0)
+        if(validation_form(form_contatiner, div_shopping_cart_modal_window, check_CDEK_status) == true)
         {
-            const key = localStorage.key(0);
-            const product_obj = JSON.parse(localStorage.getItem(key));
-            localStorage.removeItem(key);
-                       
-            let prev_button_div = document.getElementById("info-price-" + product_obj.product[1]);  
-            if (prev_button_div != null)
+            processing_form_data(form_contatiner, div_shopping_cart_modal_window, location_info);
+            transfer_data_to_seller(form_contatiner, location_info);
+
+            while (localStorage.length != 0)
             {
-                prev_button_div.removeChild(document.getElementById("buttons_num_" + product_obj.product[1]));
-                button_add_to_card(product_obj.product, prev_button_div, 0);
+                const key = localStorage.key(0);
+                const product_obj = JSON.parse(localStorage.getItem(key));
+                localStorage.removeItem(key);
+                        
+                let prev_button_div = document.getElementById("info-price-" + product_obj.product[1]);  
+                if (prev_button_div != null)
+                {
+                    prev_button_div.removeChild(document.getElementById("buttons_num_" + product_obj.product[1]));
+                    button_add_to_card(product_obj.product, prev_button_div, 0);
+                }
             }
         }
     })
@@ -119,8 +122,6 @@ async function processing_form_data(form, div_shopping_cart_modal_window, locati
 {
     let products_in_card = local_storage_processing(localStorage.length);
     let products_in_card_json = JSON.stringify(products_in_card);
-
-    //validation_form_data();
 
     let form_data = new FormData(form);
     form_data.append("products_in_card", products_in_card_json)
@@ -144,9 +145,61 @@ async function processing_form_data(form, div_shopping_cart_modal_window, locati
     }
 }
 
-function validation_form_data(inputs, form_data)
+function validation_form(form, parent_form, check_CDEK_status)
 {
+    let return_value = true;
 
+    let form_data = new FormData(form);
+
+    const name  = form_data.get("name");
+    const email = form_data.get("email");
+    const phone = form_data.get("phone");
+    
+    console.log(document.getElementById("validation_info"));
+    if (document.getElementById("validation_info") != null)
+    {
+        document.getElementById("validation_info").remove();
+    }
+
+    let div_validation_info = document.createElement("div");
+    div_validation_info.className = "validation_info";
+    div_validation_info.setAttribute("id", "validation_info");
+    div_validation_info.innerHTML = "";
+    parent_form.append(div_validation_info);
+
+    if(name == "")
+    {
+        div_validation_info.innerHTML += "ВВЕДИТЕ ИМЯ. ";
+        return_value = false;
+    }
+    if(email == "")
+    {
+        div_validation_info.innerHTML += "ВВЕДИТЕ EMAIL. ";
+        return_value = false;
+    }
+    if(phone == "")
+    {
+        div_validation_info.innerHTML += "ВВЕДИТЕ ТЕЛЕФОН. ";
+        return_value = false;
+    }
+    if(check_CDEK_status == 1)
+    {
+        const city    = form_data.get("city");
+        const address = form_data.get("address");
+
+        if(city == "")
+        {
+            div_validation_info.innerHTML += "ВВЕДИТЕ ГОРОД. ";
+            return_value = false;
+        }
+        if(address == "")
+        {
+            div_validation_info.innerHTML += "ВВЕДИТЕ АДРЕС. ";
+            return_value = false;
+        }
+    }
+
+    return return_value;
 }
 
 async function transfer_data_to_seller(form, location_info)

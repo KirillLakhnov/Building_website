@@ -74,7 +74,10 @@ function window_adding_rewiews(location_info)
     reviews_form.addEventListener("submit", function(event)
     {
         event.preventDefault();
-        processing_form_data(reviews_form, location_info, file_review.files[0]);
+        if (validation_form(div_modal_window, reviews_form, file_review.files[0]) == true)
+        {
+            processing_form_data(reviews_form, location_info, file_review.files[0]);
+        }
     })
 }
 
@@ -100,4 +103,44 @@ async function processing_form_data(form, location_info, img)
         alert("Ошибка, попробуйте еще раз");
         form.reset();
     }
+}
+
+function validation_form(parent_form, form, img)
+{
+    let return_value = true;
+
+    let form_data = new FormData(form);
+
+    const name   = form_data.get("name");
+    const review = form_data.get("review");
+    
+    console.log(document.getElementById("validation_info"));
+    if (document.getElementById("validation_info") != null)
+    {
+        document.getElementById("validation_info").remove();
+    }
+
+    let div_validation_info = document.createElement("div");
+    div_validation_info.className = "validation_info";
+    div_validation_info.setAttribute("id", "validation_info");
+    div_validation_info.innerHTML = "";
+    parent_form.append(div_validation_info);
+
+    if(name == "")
+    {
+        div_validation_info.innerHTML += "ВВЕДИТЕ ИМЯ. ";
+        return_value = false;
+    }
+    if(review == "")
+    {
+        div_validation_info.innerHTML += "ВВЕДИТЕ ТЕКСТ ОТЗЫВА. ";
+        return_value = false;
+    }
+    if(typeof img == "undefined")
+    {
+        div_validation_info.innerHTML += "ПРИКРЕПИТЕ ФОТОГРАФИЮ. ";
+        return_value = false;
+    }
+
+    return return_value;
 }
