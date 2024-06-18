@@ -76,30 +76,30 @@ function window_adding_rewiews(location_info)
         event.preventDefault();
         if (validation_form(div_modal_window, reviews_form, file_review.files[0]) == true)
         {
-            processing_form_data(reviews_form, location_info, file_review.files[0]);
+            processing_form_data(reviews_form, div_modal_window, location_info, file_review.files[0]);
         }
     })
 }
 
-async function processing_form_data(form, location_info, img)
+async function processing_form_data(form, div_modal_window, location_info, img)
 {
     let form_data = new FormData(form);
     form_data.append("image", img);
     
-    //div_shopping_cart_modal_window.classList.add("sending");
+    div_modal_window.classList.add("sending");
     let response = await fetch(location_info + "php/sending_review_data.php", {
         method: "POST",
         body: form_data,
     });
     if (response.ok)
     {
-        //div_shopping_cart_modal_window.classList.remove("sending"); 
-        alert("Сообщение отправлен на обработку");
+        div_modal_window.classList.remove("sending"); 
+        alert("Отзыв отправлен");
         document.body.removeChild(document.getElementById("modal_win"));
     }
     else
     {
-        //div_shopping_cart_modal_window.classList.remove("sending");
+        div_modal_window.classList.remove("sending");
         alert("Ошибка, попробуйте еще раз");
         form.reset();
     }
