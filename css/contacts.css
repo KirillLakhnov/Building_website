@@ -23,7 +23,7 @@
 
 
 .feedback_container {
-    height: 650px;
+    height: 670px;
     display: flex;
     justify-content: center;
 
@@ -107,4 +107,11 @@
 .feedback_container .feedback_form .send .submit_button_feedback:hover {
     border: .14rem solid #000;
     color: #000;
+}
+
+.validation_info {
+    margin-top: 10px;
+
+    color: rgb(195, 100, 100);
+    font-weight: bold;
 }

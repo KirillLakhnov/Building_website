@@ -45,3 +45,11 @@
     opacity: 0.9;
     visibility: visible;
 }
+
+.validation_info {
+    text-align: center;
+    margin-top: 10px;
+
+    color: rgb(195, 100, 100);
+    font-weight: bold;
+}

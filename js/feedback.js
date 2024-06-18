@@ -43,6 +43,11 @@ function validation_form(form)
     const email    = form_data.get("email");
     const phone    = form_data.get("phone");
     const feedback = form_data.get("feedback");
+
+    let input_name  = document.getElementById("name_feedback");
+    let input_email = document.getElementById("email_feedback");
+    let input_phone = document.getElementById("phone_feedback");
+    let input_feedback = document.getElementById("feedback");
     
     if (document.getElementById("validation_info") != null)
     {
@@ -57,23 +62,47 @@ function validation_form(form)
 
     if(name == "")
     {
+        input_name.setAttribute("style", "border-bottom: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ИМЯ. ";
         return_value = false;
     }
+    else
+    {
+        input_name.setAttribute("style", "border-bottom: 2px solid #585e5b");
+    }
     if(email == "")
     {
+        input_email.setAttribute("style", "border-bottom: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ EMAIL. ";
         return_value = false;
     }
+    else
+    {
+        input_email.setAttribute("style", "border-bottom: 2px solid #585e5b");
+    }
     if(phone == "")
     {
+        input_phone.setAttribute("style", "border-bottom: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ТЕЛЕФОН. ";
         return_value = false;
     }
+    else
+    {
+        input_phone.setAttribute("style", "border-bottom: 3px solid #585e5b");
+    }
     if(feedback == "")
     {
+        input_feedback.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ТЕКСТ СООБЩЕНИЯ. ";
         return_value = false;
+    }
+    else
+    {
+        input_feedback.setAttribute("style", "border: 3px solid #585e5b");
     }
 
     return return_value;

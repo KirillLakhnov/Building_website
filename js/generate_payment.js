@@ -22,9 +22,9 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
     let form_contatiner = document.createElement("form");
     form_contatiner.className = "contatiner_form_payment";
     form_contatiner.innerHTML = "\
-        <input type=\"text\" name=\"name\" placeholder=\"ФИО\">\
-        <input type=\"email\" name=\"email\" placeholder=\"E-mail\">\
-        <input type=\"text\" name=\"phone\" placeholder=\"Телефон\">\
+        <input type=\"text\" name=\"name\" id=\"name\" placeholder=\"ФИО\">\
+        <input type=\"email\" name=\"email\" id=\"email\" placeholder=\"E-mail\">\
+        <input type=\"text\" name=\"phone\" id=\"phone\" placeholder=\"Телефон\">\
     ";
     div_shopping_cart_modal_window.append(form_contatiner);
 
@@ -56,8 +56,8 @@ export default function buy_products(total_price, div_shopping_cart_modal_window
             div_cdek.className = "cdek_send";
             div_cdek.setAttribute("id", "cdek_send");
             div_cdek.innerHTML = "\
-                <input type=\"text\" name=\"city\" placeholder=\"Город\">\
-                <input type=\"text\" name=\"address\" placeholder=\"Адрес\">\
+                <input type=\"text\" name=\"city\" id=\"city\" placeholder=\"Город\">\
+                <input type=\"text\" name=\"address\" id=\"address\" placeholder=\"Адрес\">\
             ";
             div_label_type_shipment.after(div_cdek);
 
@@ -154,8 +154,11 @@ function validation_form(form, parent_form, check_CDEK_status)
     const name  = form_data.get("name");
     const email = form_data.get("email");
     const phone = form_data.get("phone");
+
+    let input_name  = document.getElementById("name");
+    let input_email = document.getElementById("email");
+    let input_phone = document.getElementById("phone");
     
-    console.log(document.getElementById("validation_info"));
     if (document.getElementById("validation_info") != null)
     {
         document.getElementById("validation_info").remove();
@@ -169,33 +172,66 @@ function validation_form(form, parent_form, check_CDEK_status)
 
     if(name == "")
     {
+        input_name.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ИМЯ. ";
         return_value = false;
     }
+    else
+    {
+        input_name.setAttribute("style", "border: 2px solid #585e5b");
+    }
     if(email == "")
     {
+        input_email.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ EMAIL. ";
         return_value = false;
     }
+    else
+    {
+        input_email.setAttribute("style", "border: 2px solid #585e5b");
+    }
     if(phone == "")
     {
+        input_phone.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ТЕЛЕФОН. ";
         return_value = false;
+    }
+    else
+    {
+        input_phone.setAttribute("style", "border: 2px solid #585e5b");
     }
     if(check_CDEK_status == 1)
     {
         const city    = form_data.get("city");
         const address = form_data.get("address");
 
+        let input_city    = document.getElementById("city");
+        let input_address = document.getElementById("address");
+
         if(city == "")
         {
+            input_city.setAttribute("style", "border: 3px solid #c36464");
+
             div_validation_info.innerHTML += "ВВЕДИТЕ ГОРОД. ";
             return_value = false;
         }
+        else
+        {
+            input_city.setAttribute("style", "border: 2px solid #585e5b");
+        }
         if(address == "")
         {
+            input_address.setAttribute("style", "border: 3px solid #c36464");
+
             div_validation_info.innerHTML += "ВВЕДИТЕ АДРЕС. ";
             return_value = false;
+        }
+        else
+        {
+            input_address.setAttribute("style", "border: 2px solid #585e5b");
         }
     }
 

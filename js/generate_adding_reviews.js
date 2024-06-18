@@ -34,9 +34,9 @@ function window_adding_rewiews(location_info)
     reviews_form.className = "reviews_form";
     reviews_form.innerHTML = "\
         <div class=\"input_block\">\
-            <input type=\"text\" name=\"name\" placeholder=\"Имя\">\
+            <input type=\"text\" name=\"name\" id=\"name\" placeholder=\"Имя\">\
         </div>\
-        <div class=\"text_area_review\">\
+        <div class=\"text_area_review\" id=\"rewiew\">\
             <textarea name=\"review\" rows=\"5\" placeholder=\"Напишите свой отзыв\"></textarea>\
         </div>\
         <div class = \"final_data_review\">\
@@ -113,6 +113,10 @@ function validation_form(parent_form, form, img)
 
     const name   = form_data.get("name");
     const review = form_data.get("review");
+
+    let input_name   = document.getElementById("name");
+    let input_rewiew = document.getElementById("rewiew");
+    let input_img    = document.getElementById("file_review_button");
     
     console.log(document.getElementById("validation_info"));
     if (document.getElementById("validation_info") != null)
@@ -128,18 +132,36 @@ function validation_form(parent_form, form, img)
 
     if(name == "")
     {
+        input_name.setAttribute("style", "border-bottom: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ИМЯ. ";
         return_value = false;
     }
+    else
+    {
+        input_name.setAttribute("style", "border-bottom: 2px solid #585e5b");
+    }
     if(review == "")
     {
+        input_rewiew.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ВВЕДИТЕ ТЕКСТ ОТЗЫВА. ";
         return_value = false;
     }
+    else
+    {
+        input_rewiew.setAttribute("style", "border: 2px solid #585e5b");
+    }
     if(typeof img == "undefined")
     {
+        input_img.setAttribute("style", "border: 3px solid #c36464");
+
         div_validation_info.innerHTML += "ПРИКРЕПИТЕ ФОТОГРАФИЮ. ";
         return_value = false;
+    }
+    else
+    {
+        input_img.setAttribute("style", "border: 2px solid #585e5b");
     }
 
     return return_value;
